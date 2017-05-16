@@ -9,28 +9,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'username', 'fullname', 'verify_code', 'email', 'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-
-
-
-
     public function getNameFormatted(){
         $color = '#BBBBBB';
         switch($this->accessLevel){
@@ -46,4 +24,15 @@ class User extends Authenticatable
     public function hasPermission($permissionLevel){
         return $this->accessLevel >= $permissionLevel;
     }
+
+
+    public function sessionsPlayed(){
+        return $this->belongsToMany('App\Models\Session', 'session_participants', 'user_id', 'session_id');
+    }
+
+    public function sessionsDMd(){
+        return $this->hasMany('App\Models\Session', 'dungeon_master');
+    }
+
+
 }

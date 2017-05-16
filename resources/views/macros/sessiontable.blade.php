@@ -19,10 +19,10 @@
     @foreach($sessions as $session)
         <tr>
             <td><a href="{{ route('session', ['id' => $session->id]) }}">{{ $session->title }}</a></td>
-            <td>{{ $session->getDateFormatted() }}</td>
-            <td>{{ $session->dungeonMaster->getNameFormatted() }}</td>
-            <td>{{ $session->gameType }}</td>
-            <td>{{ count($session->getParticipants()) }}/{{ $session->maxPlayers }}</td>
+            <td>{!! $session->getDateFormatted() !!}</td>
+            <td>{!! $session->dungeonMaster()->first()->getNameFormatted() !!}</td>
+            <td>{{ $session->gametype }}</td>
+            <td>{{ count($session->players()->get()) }}/{{ $session->max_players }}</td>
             <td>{{ $session->round }}</td>
             <td>{{ $session->getApproximateTime() }} uur</td>
         </tr>

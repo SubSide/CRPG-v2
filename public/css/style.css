@@ -1,0 +1,303 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: #444;
+}
+
+hr {
+    border-color: #444;
+    margin: 0px;
+}
+
+.navbar-brand a {
+    color: #888888;
+}
+
+.navbar-username-small {
+    margin-right: 15px;
+}
+
+main {
+    color: #CCC;
+    margin-bottom: 30px;
+}
+
+.menu, .content {
+    background-color: #222222;
+    border: 1px solid black;
+    box-shadow: 4px 4px 10px RGBA(0, 0, 0, 0.5);
+    padding: 5px 5px 5px 20px;
+}
+
+.content {
+    padding: 25px;
+}
+
+.menu ul {
+    padding: 0px;
+}
+
+.menu li {
+    list-style: none;
+}
+
+.menu a {
+    text-decoration: none;
+}
+
+.menu-hr {
+    margin: 5px 15px;
+}
+
+.submit-link {
+    background: transparent;
+    border: 0;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    cursor:pointer;
+    color: #337ab7;
+}
+
+.submit-link:hover {
+    text-decoration: underline;
+}
+
+/* Playfield */
+
+.playfield {
+    overflow: hidden;
+    cursor: move;
+    height: 80vh;
+}
+
+.map {
+    table-layout: fixed;
+    position: relative;
+}
+
+.map img {
+    width: 20vh;
+    height: 20vh;
+}
+
+.map img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+/* Announcements */
+
+.announcements article {
+    padding: 20px;
+    border: 1px solid #4A4A4A;
+    margin-bottom: 40px;
+    position: relative;
+}
+.announcements article:last-child {
+    margin-bottom: 5px;
+}
+
+.announcements h3 {
+    margin-top: 0px;
+    padding-bottom: 5px;
+}
+
+.announcements hr {
+    margin-bottom: 10px;
+    background-color: #3A3A3A;
+}
+
+.announcements p {
+    color: #AAA;
+    padding: 5px 15px;
+}
+
+.announcements .announcement-title {
+    color: #CCC;
+}
+
+.announcements .announcement-link-text {
+    font-size: 12px;
+    color: #CCC;
+}
+
+pre {
+    background: none;
+    color: inherit;
+}
+
+/*.responsive-table */
+table.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+/* Zebra striping */
+.responsive-table tr:nth-of-type(odd) {
+    background: #3A3A3A;
+}
+
+.responsive-table tr:nth-of-type(even) {
+    background: #222;
+}
+
+.responsive-table td, .responsive-table th {
+    border: 1px solid #777 !important;
+}
+
+.responsive-table th {
+    background: #111;
+    color: #CCC;
+    font-weight: bold;
+}
+.responsive-table td, .responsive-table th {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+@media (max-width: 767px) {
+
+    /* Force table to not be like tables anymore */
+    table.responsive-table , .responsive-table thead, .responsive-table tbody, .responsive-table tfoot, .responsive-table th, .responsive-table td, .responsive-table tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .responsive-table tbody tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .responsive-table tr {
+        border: 1px solid #ccc;
+    }
+
+    .responsive-table td {
+        border: none !important;
+        position: relative;
+        padding-left: 50% !important;
+    }
+
+    .responsive-table td:first-child {
+        border-bottom: 2px solid #777 !important;
+    }
+
+    .responsive-table td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        overflow-x: hidden;
+    }
+
+    /* player table */
+    .players-table td:nth-of-type(1):before {
+        content: "Naam";
+    }
+    .players-table td:nth-of-type(2):before {
+        content: "Laatste sessie";
+    }
+    .players-table td:nth-of-type(3):before {
+        content: "Volgende sessie";
+    }
+    .players-table td:nth-of-type(4):before {
+        content: "Meestgespeelde Character";
+    }
+
+    /* Sessions table */
+    .sessions-table td:nth-of-type(1):before {
+        content: "Titel";
+    }
+    .sessions-table td:nth-of-type(2):before {
+        content: "Datum";
+    }
+    .sessions-table td:nth-of-type(3):before {
+        content: "Dungeon master";
+    }
+    .sessions-table td:nth-of-type(4):before {
+        content: "Game type";
+    }
+    .sessions-table td:nth-of-type(5):before {
+        content: "Spelers";
+    }
+    .sessions-table td:nth-of-type(6):before {
+        content: "Ronde";
+    }
+    .sessions-table td:nth-of-type(7):before {
+        content: "Geschatte tijd";
+    }
+
+    /* Admin user table */
+    .admin-user-table td:nth-of-type(1):before {
+        content: "Naam";
+    }
+    .admin-user-table td:nth-of-type(2):before {
+        content: "Gebruikersnaam";
+    }
+    .admin-user-table td:nth-of-type(3):before {
+        content: "Accesslevel";
+    }
+    .admin-user-table td:nth-of-type(4):before {
+        content: "Pas aan";
+    }
+
+    /* Admin announcements table */
+    .admin-announcement-table td:nth-of-type(1):before {
+        content: "Titel";
+    }
+    .admin-announcement-table td:nth-of-type(2):before {
+        content: "Comments";
+    }
+    .admin-announcement-table td:nth-of-type(3):before {
+        content: "Pas aan";
+    }
+    .admin-announcement-table td:nth-of-type(4):before {
+        content: "Verwijder";
+    }
+}
+
+/* Session page */
+.session p {
+    color: #888;
+}
+
+.session p .data {
+    color: #AAA;
+}
+
+.session p small {
+    display: block;
+}
+
+/* Login */
+.login {
+    background-color: #222;
+    color: #FFFFFF;
+}
+
+
+/* Bootstrap override */
+.btn-default {
+    background-color: #333;
+    border-color: #666;
+    color: #777;
+}
+
+.btn-default:hover, .btn-default:active, .btn-default:focus {
+    background-color: #555 !important;
+    border-color: #888 !important;
+    color: #AAA !important;
+}
