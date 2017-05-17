@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Session;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class PlayerController extends Controller
 {
-    public function view($user){
+
+
+    public function viewList(){
+        return view('playerlist', array(
+            'users' => User::all()
+        ));
+    }
+
+    public function viewProfile($user){
         try {
             $user = User::where('username', $user)->firstOrFail();
 

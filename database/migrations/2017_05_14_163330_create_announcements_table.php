@@ -19,7 +19,7 @@ class CreateAnnouncementsTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->dateTime('date_posted');
-
+            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

@@ -1,33 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Management;
 
+use App\Http\Controllers\Controller;
 use App\Models\AccessLevel;
+use App\Models\Session;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
-
-    public function __construct(){
-        $this->middleware('auth');
-    }
-
-    public function show(){
-        if(!Auth::user()->hasPermission(AccessLevel::ADMIN))
-            return view('home');
-
-        return view('admin.home');
-    }
-
     public function users(){
         if(!Auth::user()->hasPermission(AccessLevel::ADMIN))
             return view('home');
 
         $users = User::all();
-        return view('admin.users', compact('users'));
+        return view('management.user.users', compact('users'));
     }
 
     public function editUser(Request $request, $user){
@@ -37,15 +28,15 @@ class AdminController extends Controller
         try {
             $user = User::where('username', $user)->firstOrFail();
         } catch(ModelNotFoundException $e) {
-            return redirect(route('admin.users'));
+            return redirect(route('management.user.users'));
         }
 
 
         if($request->isMethod('get'))
-            return view('admin.edituser', compact('user'));
+            return view('management.user.edituser', compact('user'));
 
         if($user->accessLevel > Auth::user()->accessLevel) {
-            return view('admin.edituser', compact('user'));
+            return view('management.user.edituser', compact('user'));
         }
 
         $this->validate($request, [
@@ -66,6 +57,11 @@ class AdminController extends Controller
         if(intval($request->input('accesslevel')) < Auth::user()->accessLevel){
             $user->accessLevel = intval($request->input('accesslevel'));
         }
+
+        if(!empty($request->input('password'))){
+            $user->password = Hash::make($request->input('password'));
+        }
+
         $user->save();
         return redirect(route('admin.users.edit', ['user' => $user->username]))->with('msg', 'Gebruiker succesvol aangepast.');
     }

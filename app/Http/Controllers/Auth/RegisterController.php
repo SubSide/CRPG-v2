@@ -95,4 +95,8 @@ class RegisterController extends Controller
 
         return $user;
     }
+
+    public function registrationSuccesful(){
+        return view('auth.registrationsuccesful');
+    }
 }

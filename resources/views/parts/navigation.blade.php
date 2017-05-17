@@ -8,6 +8,20 @@
                     <h3 class="modal-title" id="modalLabel">Login</h3>
                 </div>
                 <form method="POST" action="{{ route('login') }}" class="modal-body">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <script type="text/javascript">
+                            $(window).on('load',function(){
+                                $('#login').modal('show');
+                            });
+                        </script>
+                    @endif
                     <div class="form-group">
                         <label for="username">Gebruikersnaam:</label>
                         <div class="input-group">
@@ -34,6 +48,9 @@
                     <div class="form-group">
                         {{ csrf_field() }}
                         <input class="btn btn-success" type="submit" value="Log in"/>
+                    </div>
+                    <div>
+                        <a href="{{ route('forgotpassword') }}">Wachtwoord vergeten?</a>
                     </div>
                 </form>
                 <div class="modal-footer">
@@ -62,7 +79,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ route('map') }}">Map</a></li>
                 <li><a href="{{ route('sessions') }}">Sessies</a></li>
-                <li><a href="{{ route('players') }}">Spelers</a></li>
+                <li><a href="{{ route('users') }}">Spelers</a></li>
             </ul>
             <hr class="visible-xs" />
             <ul class="nav navbar-nav navbar-right">

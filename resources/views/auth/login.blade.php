@@ -46,6 +46,13 @@
                 <input type="checkbox" id="stayLogged" name="stayLogged" value="true" /><label for="stayLogged">Stay logged in</label><br /><br />
             </div>
         </div>
-        {{ csrf_field() }}
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-offset-2 col-md-4">
+                <div class="form-group">
+                    {{ csrf_field() }}
+                    <input class="btn btn-success" type="submit" value="Log in"/>
+                </div>
+            </div>
+        </div>
     </form>
 @endsection

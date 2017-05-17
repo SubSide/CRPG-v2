@@ -63,6 +63,19 @@
         <div class="row">
             <div class="col-xs-12 col-md-offset-3 col-md-6">
                 <div class="form-group">
+                    <label for="email">Wachtwoord (Houd leeg om niet aan te passen):</label>
+                    <input class="form-control" type="password" id="password" name="password" placeholder="(Houd deze leeg om niet aan te passen)" {{ ($user->accessLevel >= Auth::user()->accessLevel)?"disabled":"" }} />
+                </div>
+                @if ($errors->has('password'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-3 col-md-6">
+                <div class="form-group">
                     <label for="accesslevel">Access level:</label>
                     <select class="form-control" id="accesslevel" name="accesslevel" {{ ($user->accessLevel >= Auth::user()->accessLevel)?"disabled":"" }}>
                         <option value="0" {{ ($user->accessLevel==\App\Models\AccessLevel::USER)?"selected":"" }}>User</option>

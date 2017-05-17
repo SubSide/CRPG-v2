@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Management;
 
+use App\Http\Controllers\Controller;
 use App\Models\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class SessionController extends Controller
         }
 
         if($request->isMethod('get')){
-            return view('session.create');
+            return view('management.session.create');
         }
 
         $this->validate($request, [
@@ -100,7 +101,7 @@ class SessionController extends Controller
         }
 
         if($request->isMethod('get')){
-            return view('session.edit', compact('session'));
+            return view('management.session.edit', compact('session'));
         }
 
         $this->validate($request, [

@@ -21,9 +21,7 @@
                 <small>Bij {!! $announcement->user->getNameFormatted() !!} op {{ $announcement->getDatePostedFormatted() }}</small>
             </h3>
             <hr />
-            <pre>
-                {{ strip_tags($announcement->content) }}
-            </pre>
+            <pre>{{ strip_tags($announcement->content) }}</pre>
             <hr />
             {{--<a href="{{ route('announcement.show', ['id' => $announcement->id]) }}" class="announcement-link-text">{{ $announcement->comments() }} comment{{ ($announcement->getCommentCount()!=1)?"s":"" }}</a>--}}
             @if(Auth::check() && Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN))
