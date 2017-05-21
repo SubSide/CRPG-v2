@@ -17,17 +17,15 @@ class ConfirmEmail extends Mailable
      * @var Order
      */
     protected $user;
-    protected $url;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $url)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->url = $url;
     }
 
     /**
@@ -37,9 +35,6 @@ class ConfirmEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.confirmemail')
-            ->with([
-                'url' => $url
-            ]);
+        return $this->markdown('emails.confirmemail', ['user' => $this->user]);
     }
 }

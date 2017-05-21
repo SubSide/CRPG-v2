@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\ConfirmEmail;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -53,6 +56,10 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
         // We don't want the user to automatically login.
         //$this->guard()->login($user);
+
+        Mail::to($user)->send(new ConfirmEmail($user));
+
+
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
     }
@@ -87,7 +94,7 @@ class RegisterController extends Controller
         $user->username = $data['username'];
         $user->email = $data['email'];
         $user->fullname = $data['fullname'];
-        $user->accessLevel = '0';
+        $user->access_level = '0';
         $user->verified = '0';
         $user->password = bcrypt($data['password']);
         $user->verify_code = bin2hex(random_bytes(20));
@@ -100,5 +107,18 @@ class RegisterController extends Controller
 
     public function registrationSuccesful(){
         return view('auth.registrationsuccesful');
+    }
+
+    public function confirm($token){
+        try {
+            $user = User::where('verify_code', $token)->where('verified', '0')->firstOrFail();
+            $user->verified = 1;
+            $user->save();
+            return view('auth.confirmregistration');
+        } catch(ModelNotFoundException $e){
+            return view('auth.confirmregistration', [
+                'message' => 'De token is incorrect of al gebruikt!'
+            ]);
+        }
     }
 }

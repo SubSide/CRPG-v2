@@ -24,12 +24,12 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@view')->name('register');
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 Route::get('register/succesful', 'Auth\RegisterController@registrationSuccesful')->name('register.successful');
+Route::get('confirm/{token}', 'Auth\RegisterController@confirm')->name('register.confirm');
 
 // Settings
 Route::get('me/sessions', 'Me\MySessionsController@show')->name('me.sessions');
 Route::match(['get', 'post'], 'settings', 'Me\SettingsController@settings')->name('settings');
-Route::match(['get', 'post'], 'forgot', 'Me\ForgotPasswordController@forgotPassword')->name('forgotpassword');
-Route::match(['get', 'post'], 'reset', 'Me\ForgotPasswordController@reset')->name('reset');
+Route::match(['get', 'post'], 'forgot/{token?}', 'Me\ForgotPasswordController@forgotPassword')->name('forgotpassword');
 
 // Session stuff
 Route::match(['get', 'post'], 'session/create', 'Management\SessionController@create')->name('session.create');
