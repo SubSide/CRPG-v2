@@ -1,6 +1,7 @@
 @extends('base')
 
 @section('content')
+    <a class="go-back" href="{{ route('home') }}">Ga terug</a>
     <article class="announcement">
         @if(Auth::check() && Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN))
             <div class="dropdown pull-right hidden-xs">
@@ -14,19 +15,18 @@
                 </ul>
             </div>
         @endif
-
         <h3>
-            <a class="announcement-title" href="{{ route('announcement.show', ['id' => $announcement->id]) }}">{{ $announcement->title }}</a><br />
-            <small>Bij {{ $announcement->author->getNameFormatted() }} op {{ $announcement->getDatePostedFormatted() }}</small>
+            {{ $announcement->title }}<br />
+            <small>Bij {!! $announcement->user->getNameFormatted() !!} op {{ $announcement->getDatePostedFormatted() }}</small>
         </h3>
         <hr />
-        <pre>{{ strip_tags($announcement->content) }}</pre>
+        <p class="announcement-content">{!! $announcement->processedContent() !!}</p>
         <hr />
-        <a href="{{ route('announcement.show', ['id' => $announcement->id]) }}" class="announcement-link-text">{{ $announcement->getCommentCount() }} comment{{ ($announcement->getCommentCount()!=1)?"s":"" }}</a>
+        {{--<a href="{{ route('announcement.show', ['id' => $announcement->id]) }}" class="announcement-link-text">{{ $announcement->comments() }} comment{{ ($announcement->getCommentCount()!=1)?"s":"" }}</a>--}}
         @if(Auth::check() && Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN))
             <div class="pull-right visible-xs">
-                <a class="announcement-link-text" href="/announcement/edit/<?=$announcement->id;?>/">Aanpassen</a> |
-                <a class="announcement-link-text" href="/announcement/<?=$announcement->id;?>/delete">Verwijderen</a>
+                <a class="announcement-link-text" href="{{ route('announcement.edit', ['id' => $announcement->id]) }}">Aanpassen</a> |
+                <a class="announcement-link-text" href="{{ route('announcement.delete', ['id' => $announcement->id]) }}">Verwijderen</a>
             </div>
         @endif
     </article>

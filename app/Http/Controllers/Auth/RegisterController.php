@@ -91,6 +91,8 @@ class RegisterController extends Controller
         $user->verified = '0';
         $user->password = bcrypt($data['password']);
         $user->verify_code = bin2hex(random_bytes(20));
+        $user->date_registered = date("Y-m-d H:i:s");
+        $user->registration_ip = $_SERVER['REMOTE_ADDR'];
         $user->save();
 
         return $user;

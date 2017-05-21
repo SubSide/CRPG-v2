@@ -17,17 +17,22 @@
             @endif
 
             <h3>
-                <a class="announcement-title" href="{{ route('announcement.show', ['id' => $announcement->id]) }}">{{ $announcement->title }}</a><br />
+                <a class="announcement-title" href="{{ $announcement->getTitleUrl() }}">{{ $announcement->title }}</a><br />
                 <small>Bij {!! $announcement->user->getNameFormatted() !!} op {{ $announcement->getDatePostedFormatted() }}</small>
             </h3>
             <hr />
-            <pre>{{ strip_tags($announcement->content) }}</pre>
+            @if(strlen($announcement->content) < 700)
+                <p class="announcement-content">{!! $announcement->processedContent() !!}</p>
+            @else
+                <p class="announcement-content">{!! substr($announcement->processedContent(), 0, strrpos(substr($announcement->processedContent(), 0, 500), ' ')) !!}...</p>
+                <a href="{{ $announcement->getTitleUrl() }}">Lees meer...</a>
+            @endif
             <hr />
             {{--<a href="{{ route('announcement.show', ['id' => $announcement->id]) }}" class="announcement-link-text">{{ $announcement->comments() }} comment{{ ($announcement->getCommentCount()!=1)?"s":"" }}</a>--}}
             @if(Auth::check() && Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN))
                 <div class="pull-right visible-xs">
-                    <a class="announcement-link-text" href="/announcement/edit/<?=$announcement->id;?>/">Aanpassen</a> |
-                    <a class="announcement-link-text" href="/announcement/<?=$announcement->id;?>/delete">Verwijderen</a>
+                    <a class="announcement-link-text" href="{{ route('announcement.edit', ['id' => $announcement->id]) }}">Aanpassen</a> |
+                    <a class="announcement-link-text" href="{{ route('announcement.delete', ['id' => $announcement->id]) }}">Verwijderen</a>
                 </div>
             @endif
         </article>

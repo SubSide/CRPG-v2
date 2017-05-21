@@ -17,7 +17,7 @@ class SessionController extends Controller
             $zoekt->save();
         }
 
-        $sessions = Session::where('date', '>', 'CURRENT_DATE()')->orderBy('date', 'DESC')->get();
+        $sessions = Session::where('date', '>', date("Y-m-d"))->orderBy('date', 'DESC')->get();
 
         $thisWeek = array();
         $nextWeek = array();

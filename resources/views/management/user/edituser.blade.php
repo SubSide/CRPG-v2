@@ -50,6 +50,14 @@
         <div class="row">
             <div class="col-xs-12 col-md-offset-3 col-md-6">
                 <div class="form-group">
+                    <label>Geregistreerd op:</label>
+                    <input class="form-control" type="text" value="{{ $user->date_registered }}" disabled />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-3 col-md-6">
+                <div class="form-group">
                     <label for="email">Email adres:</label>
                     <input class="form-control" type="email" id="email" name="email" placeholder="email" value="{{ old('email', $user->email) }}" required {{ ($user->accessLevel >= Auth::user()->accessLevel)?"disabled":"" }} />
                 </div>

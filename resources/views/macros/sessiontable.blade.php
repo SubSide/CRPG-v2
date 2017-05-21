@@ -18,7 +18,7 @@
     <tfoot>
     @foreach($sessions as $session)
         <tr>
-            <td><a href="{{ route('session', ['id' => $session->id]) }}">{{ $session->title }}</a></td>
+            <td><a href="{{ $session->getTitleUrl() }}">{{ $session->title }}</a></td>
             <td>{!! $session->getDateFormatted() !!}</td>
             <td>{!! $session->dungeonMaster()->first()->getNameFormatted() !!}</td>
             <td>{{ $session->gametype }}</td>

@@ -14,7 +14,7 @@
         </ul>
     </div>
     @endif
-
+    <a class="go-back" href="{{ route('sessions') }}">Ga terug</a>
     @if(session('err'))
         <div class="text-danger">
             {{ session('err') }}

@@ -11,7 +11,7 @@
     <h4>Alle gespeelde sessies:</h4>
     <ul>
         @forelse($sessionsPlayed as $session)
-            <li><a href="{{ route('session', ['id' => $session->id]) }}">{{ $session->title }}</a></li>
+            <li><a href="{{ $session->getTitleUrl() }}">{{ $session->title }}</a></li>
         @empty
             <li>Deze persoon heeft nog geen sessies gespeeld!</li>
         @endforelse
@@ -22,7 +22,7 @@
         <h4>Alle geDMde sessies:</h4>
         <ul>
             @foreach($sessionsDMd as $session)
-                <li><a href="{{ route('session', ['id' => $session->id]) }}">{{ $session->title }}</a></li>
+                <li><a href="{{ $session->getTitleUrl() }}">{{ $session->title }}</a></li>
             @endforeach
         </ul>
     @endif

@@ -39,4 +39,8 @@ class Session extends Model
         }
         return '00:00';
     }
+
+    public function getTitleUrl(){
+        return route('session', ['id' => $this->id.'-'.str_replace('+', '-', urlencode(preg_replace("/[^a-zA-Z0-9\\ ]+/", "", $this->title)))]);
+    }
 }

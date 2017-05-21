@@ -11,7 +11,7 @@ class User extends Authenticatable
 
     public function getNameFormatted(){
         $color = '#BBBBBB';
-        switch($this->accessLevel){
+        switch($this->access_level){
             //default:
             case AccessLevel::WEBMASTER:
             case AccessLevel::ADMIN:
@@ -22,7 +22,7 @@ class User extends Authenticatable
     }
 
     public function hasPermission($permissionLevel){
-        return $this->accessLevel >= $permissionLevel;
+        return $this->access_level >= $permissionLevel;
     }
 
 

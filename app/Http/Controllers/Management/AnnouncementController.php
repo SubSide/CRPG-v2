@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Auth;
 
 class AnnouncementController extends Controller
 {
+    public function show($id){
+        try {
+            $announcement = Announcement::findOrFail($id);
+            return view('announcement', compact('announcement'));
+        } catch(ModelNotFoundException $e){
+            return redirect(route('home'));
+        }
+    }
+
     public function showAdminList(){
         if(!Auth::check() || !Auth::user()->hasPermission(AccessLevel::ADMIN))
             return redirect('home');

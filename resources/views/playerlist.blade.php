@@ -19,8 +19,8 @@
             @foreach($users as $user)
                 <tr>
                     <td>{!! $user->getNameFormatted() !!}</td>
-                    <td>Todo</td>
-                    <td>Todo</td>
+                    <td>{!! (array_key_exists($user->id, $lastPlayed)) ? '<a href="'. route('session', ['id' => $lastPlayed[$user->id][0] . '-'.str_replace('+', '-', urlencode(preg_replace("/[^a-zA-Z0-9\\ ]+/", "", $lastPlayed[$user->id][1])))]) .'">'.$lastPlayed[$user->id][1].'</a>' : 'Geen' !!}</td>
+                    <td>{!! (array_key_exists($user->id, $nextPlaying)) ? '<a href="'. route('session', ['id' => $nextPlaying[$user->id][0] . '-'.str_replace('+', '-', urlencode(preg_replace("/[^a-zA-Z0-9\\ ]+/", "", $nextPlaying[$user->id][1])))]) .'">'.$nextPlaying[$user->id][1].'</a>' : 'Geen' !!}</td>
                     <td>Todo</td>
                 </tr>
             @endforeach
