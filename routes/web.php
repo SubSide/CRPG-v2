@@ -29,6 +29,7 @@ Route::get('register/succesful', 'Auth\RegisterController@registrationSuccesful'
 Route::get('me/sessions', 'Me\MySessionsController@show')->name('me.sessions');
 Route::match(['get', 'post'], 'settings', 'Me\SettingsController@settings')->name('settings');
 Route::match(['get', 'post'], 'forgot', 'Me\ForgotPasswordController@forgotPassword')->name('forgotpassword');
+Route::match(['get', 'post'], 'reset', 'Me\ForgotPasswordController@reset')->name('reset');
 
 // Session stuff
 Route::match(['get', 'post'], 'session/create', 'Management\SessionController@create')->name('session.create');

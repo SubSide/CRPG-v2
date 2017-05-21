@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('content')
-    <form method="POST"  class="container jumbotron login" action="{{ route('login') }}">
+    <form method="POST" class="login" action="{{ route('login') }}">
         <div class="row">
             <div class="col-xs-12 col-md-offset-2 col-md-8">
                 <h2 class="text-bold"><strong>Log in</strong></h2>

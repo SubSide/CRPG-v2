@@ -3,18 +3,9 @@
 @section('content')
     <form method="POST" action="{{ route('forgotpassword') }}">
         {{ csrf_field() }}
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (!empty($msg))
-            <div class="alert alert-info">
-                {{ $msg }}
+        @if (isset($message))
+            <div class="alert alert-success">
+                {{ $message }}
             </div>
         @endif
         <div class="row">
@@ -27,6 +18,11 @@
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input class="form-control" type="text" id="email" name="email" placeholder="Email adres" required />
+                    @if ($errors->has('email'))
+                        <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                    @endif
                 </div>
             </div>
         </div>
