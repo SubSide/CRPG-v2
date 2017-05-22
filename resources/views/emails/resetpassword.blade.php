@@ -1,11 +1,11 @@
 @component('mail::message')
-# Confirmation email
+# Reset password
 
-Hallo {{ $user->fullname }}! Welkom bij CRPG! :)
-Klik op de link hieronder om je email te bevestigen.
+Wachtwoord vergeten? Gebruik de link hieronder om je wachtwoord te resetten.
 
-{{ route('forgotpassword', ['token' => $user->verify_code]) }}
+{{ route('resetpassword', ['token' => $token]) }}
 
-Thanks,<br>
-{{ config('app.name') }}
+Al heb je dit niet zelf aangevraagd dan kun je dit mailtje negeren (en deels een beetje paranoia worden).
+
+Met liefde, CRPG
 @endcomponent

@@ -8,12 +8,9 @@
                     <h3 class="modal-title" id="modalLabel">Login</h3>
                 </div>
                 <form method="POST" action="{{ route('login') }}" class="modal-body">
-                    @if (count($errors) > 0)
+                    @if ($errors->has('username'))
                         <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
+                            <li>{{ $errors->first('username') }}</li>
                             </ul>
                         </div>
                         <script type="text/javascript">

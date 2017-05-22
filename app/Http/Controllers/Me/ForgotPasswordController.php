@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Me;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ForgotPassword;
+use App\Mail\ResetPasswordConfirmed;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
@@ -48,7 +50,7 @@ class ForgotPasswordController extends Controller
 
         try {
             $user = User::where('email', $request->input('email'))->firstOrFail();
-            //Mail::to($user->email)->send(new ForgotPassword($user));
+            Mail::to($user)->send(new ForgotPassword($user, $token));
         } catch(ModelNotFoundException $e){}
 
         return view('me.forgotpassword', [
@@ -56,7 +58,42 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
-    public function reset(Request $request){
+    public function reset(Request $request, $token){
+        $email = DB::select('SELECT * FROM password_resets WHERE token=:token', ['token' => $token]);
 
+        if(count($email) > 0){
+            try {
+                $user = User::where('email', $email[0]->email)->firstOrFail();
+            } catch(ModelNotFoundException $e){
+                return view('me.forgotpassword', [
+                    'message' => 'Er is geen account an deze token gekoppeld! Voor hulp vraag de CRPG whatsapp groep.'
+                ]);
+            }
+        } else {
+            return view('me.forgotpassword', [
+                'message' => 'Er is geen account an deze token gekoppeld! Voor hulp vraag de CRPG whatsapp groep.'
+            ]);
+        }
+
+        if($request->isMethod('get'))
+            return view('me.resetpassword', [
+                'token' => $token,
+            ]);
+
+
+        $this->validate($request, [
+            'password' => 'min:6|confirmed',
+        ]);
+
+
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+
+        DB::delete('DELETE FROM password_resets WHERE token=:token', ['token' => $token]);
+        Mail::to($user)->send(new ResetPasswordConfirmed());
+
+        return view('me.forgotpassword', [
+            'message' => 'Wachtwoord is succesvol aangepast!'
+        ]);
     }
 }

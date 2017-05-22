@@ -4,8 +4,7 @@
 Hallo {{ $user->fullname }}! Welkom bij CRPG! :)
 Klik op de link hieronder om je email te bevestigen.
 
-{{ route('confirm', ['token' => $user->verify_code]) }}
+{{ route('register.confirm', ['token' => $user->verify_code]) }}
 
-Thanks,<br>
-{{ config('app.name') }}
+See you at CRPG!
 @endcomponent

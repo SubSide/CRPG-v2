@@ -11,11 +11,6 @@ class ConfirmEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * The order instance.
-     *
-     * @var Order
-     */
     protected $user;
 
     /**
