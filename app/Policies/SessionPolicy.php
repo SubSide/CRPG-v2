@@ -20,7 +20,7 @@ class SessionPolicy
      */
     public function update(User $user, Session $session)
     {
-        return $user->hasPermission(AccessLevel::ADMIN) || $session->dungeonMaster()->id === $user->id;
+        return $user->hasPermission(AccessLevel::ADMIN) || $session->dungeonMaster()->get()->id === $user->id;
     }
 
     /**
@@ -32,6 +32,6 @@ class SessionPolicy
      */
     public function delete(User $user, Session $session)
     {
-        return $user->hasPermission(AccessLevel::ADMIN) || $session->dungeonMaster()->id === $user->id;
+        return $user->hasPermission(AccessLevel::ADMIN) || $session->dungeonMaster()->get()->id === $user->id;
     }
 }
