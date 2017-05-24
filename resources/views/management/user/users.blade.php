@@ -21,7 +21,7 @@
     <tr>
         <td>{!! $user->getNameFormatted() !!}</td>
         <td>{{ $user->username }}</td>
-        <td>{!! \App\Models\AccessLevel::getLevelFormatted($user->accessLevel) !!}</td>
+        <td>{!! \App\Models\AccessLevel::getLevelFormatted($user->access_level) !!}</td>
         <td><a href="{{ route('admin.users.edit', ['username' => $user->username]) }}">Edit</a></td>
     </tr>
     @endforeach

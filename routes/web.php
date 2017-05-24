@@ -51,6 +51,6 @@ Route::get('admin/announcements', 'Management\AnnouncementController@showAdminLi
 Route::match(['get', 'post'], '/announcement/create', 'Management\AnnouncementController@create')->name('announcement.create');
 Route::get('/announcement/{id}', 'Management\AnnouncementController@show')->name('announcement.show');
 Route::match(['get', 'post'], '/announcement/{id}/edit', 'Management\AnnouncementController@edit')->name('announcement.edit');
-Route::get('/announcement/{id}/delete', 'Management\AnnouncementController@delete')->name('announcement.delete');
+Route::match(['get', 'post'], '/announcement/{id}/delete', 'Management\AnnouncementController@delete')->name('announcement.delete');
 
 

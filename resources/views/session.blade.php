@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="session">
-    @if(Auth::check() && (Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN) || $session->dungeonMaster == Auth::user()))
+    @can('update', $session)
     <div class="dropdown pull-right">
         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Actions
@@ -13,7 +13,7 @@
             <li><a href="{{ route('session.delete', ['id' => $session->id]) }}">Verwijderen</a></li>
         </ul>
     </div>
-    @endif
+    @endcan
     <a class="go-back" href="{{ route('sessions') }}">Ga terug</a>
     @if(session('err'))
         <div class="text-danger">

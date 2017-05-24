@@ -31,11 +31,9 @@ class UserController extends Controller
             return redirect(route('management.user.users'));
         }
 
-
-        if($request->isMethod('get'))
-            return view('management.user.edituser', compact('user'));
-
-        if($user->accessLevel > Auth::user()->accessLevel) {
+        // If the method is GET we want to show the view.
+        // But ALSO if the user is not able to update the user we don't want to continue with the code.
+        if($request->isMethod('get') || Auth::user()->cant('update', $user)) {
             return view('management.user.edituser', compact('user'));
         }
 
@@ -46,14 +44,18 @@ class UserController extends Controller
             'accesslevel' => 'required|integer',
         ]);
 
-        $testUser = User::where('username', $request->input('username'))->orWhere('email', $request->input('email'))->get();
+        $testUser = User::where('username', $request->input('username'))
+            ->orWhere('email', $request->input('email'))->get();
+
         if(count($testUser) > 1 || (!$testUser->contains($user->id) && count($testUser) > 0))
-            return redirect(route('admin.users.edit', ['user' => $user->username]))->with('msg', 'Deze username of email bestaat al!');
+            return redirect(route('admin.users.edit', ['user' => $user->username]))
+                ->with('msg', 'Deze username of email bestaat al!');
 
         $user->username = strip_tags(trim($request->input('username')));
         $user->fullName = strip_tags(trim($request->input('fullname')));
         $user->email = trim($request->input('email'));
         $user->verified = !empty($request->input('verified'));
+
         if(intval($request->input('accesslevel')) < Auth::user()->accessLevel){
             $user->accessLevel = intval($request->input('accesslevel'));
         }

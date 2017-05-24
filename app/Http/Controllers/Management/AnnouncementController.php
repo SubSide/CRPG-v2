@@ -68,21 +68,21 @@ class AnnouncementController extends Controller
 
 
     public function delete(Request $request, $id){
-        try {
-            $session = Announcement::findOrFail($id);
-        } catch(ModelNotFoundException $e){
-            return redirect(route('announcements'));
+        if(!Auth::check() || !Auth::user()->hasPermission(AccessLevel::ADMIN)){
+            return redirect(route('announcements'))->with('err', 'Je hebt hier geen rechten voor!');
         }
 
-        if(!Auth::check() || (!Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN) && $session->dungeonMaster != Auth::user())){
-            return redirect(route('session', ['id' => $id]))->with('err', 'Je hebt hier geen rechten voor!');
+        try {
+            $announcement = Announcement::findOrFail($id);
+        } catch(ModelNotFoundException $e){
+            return redirect(route('admin.announcements'));
         }
 
         if($request->isMethod('get')){
-            return view('session.delete', compact('session'));
+            return view('management.announcement.delete', compact('announcement'));
         }
 
-        $session->delete();
-        return redirect(route('sessions'));
+        $announcement->delete();
+        return redirect(route('admin.announcements'));
     }
 }

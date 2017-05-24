@@ -96,7 +96,7 @@ class SessionController extends Controller
             return redirect(route('sessions'));
         }
 
-        if(!Auth::check() || (!Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN) && $session->dungeonMaster != Auth::user())){
+        if(!Auth::check() || Auth::user()->cant('update', $session)){
             return redirect(route('session', ['id' => $id]))->with('err', 'Je hebt hier geen rechten voor!');
         }
 
@@ -143,12 +143,12 @@ class SessionController extends Controller
             return redirect(route('sessions'));
         }
 
-        if(!Auth::check() || (!Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN) && $session->dungeonMaster != Auth::user())){
+        if(!Auth::check() || Auth::user()->cant('delete', $session)){
             return redirect(route('session', ['id' => $id]))->with('err', 'Je hebt hier geen rechten voor!');
         }
 
         if($request->isMethod('get')){
-            return view('session.delete', compact('session'));
+            return view('management.session.delete', compact('session'));
         }
 
         $session->delete();

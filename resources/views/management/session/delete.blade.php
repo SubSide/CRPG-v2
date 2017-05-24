@@ -7,7 +7,7 @@
 <form method="POST" action="">
     {{ csrf_field() }}
     <input class="btn btn-danger" type="submit" name="imsure" value="Ja" />
-    <a href="{{ route('session.show', ['id' => $session->id]) }}" class="btn btn-success">Nee</a>
+    <a href="{{ route('session', ['id' => $session->id]) }}" class="btn btn-success">Nee</a>
 </form><br />
     @parent()
 @endsection
