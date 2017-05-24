@@ -30,6 +30,6 @@ class ConfirmEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.confirmemail', ['user' => $this->user]);
+        return $this->subject('CRPG: Bevestig je email')->markdown('emails.confirmemail', ['user' => $this->user]);
     }
 }

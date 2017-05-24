@@ -32,7 +32,7 @@ class ForgotPassword extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.resetpassword')
+        return $this->subject('CRPG: Wachtwoord resetten')->markdown('emails.resetpassword')
             ->with([
                 'user' => $this->user,
                 'token' => $this->token,

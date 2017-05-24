@@ -27,6 +27,6 @@ class ResetPasswordConfirmed extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.passwordresetconfirmed');
+        return $this->subject("CRPG: Je wachtwoord is succesvol veranderd!")->markdown('emails.passwordresetconfirmed');
     }
 }
