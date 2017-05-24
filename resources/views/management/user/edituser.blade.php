@@ -86,9 +86,9 @@
                 <div class="form-group">
                     <label for="access_level">Access level:</label>
                     <select class="form-control" id="access_level" name="access_level" {{ ($user->access_level >= Auth::user()->access_level)?"disabled":"" }}>
-                        <option value="0" {{ ($user->access_level===\App\Models\access_level::USER)?"selected":"" }}>User</option>
-                        <option value="1" {{ ($user->access_level===\App\Models\access_level::ADMIN)?"selected":"" }} {{ Auth::user()->hasPermission(\App\Models\access_level::WEBMASTER)?"":"disabled" }}>Admin</option>
-                        <option value="2" {{ ($user->access_level===\App\Models\access_level::WEBMASTER)?"selected":"" }} disabled>Webmaster</option>
+                        <option value="0" {{ ($user->access_level===\App\Models\AccessLevel::USER)?"selected":"" }}>User</option>
+                        <option value="1" {{ ($user->access_level===\App\Models\AccessLevel::ADMIN)?"selected":"" }} {{ Auth::user()->hasPermission(\App\Models\AccessLevel::WEBMASTER)?"":"disabled" }}>Admin</option>
+                        <option value="2" {{ ($user->access_level===\App\Models\AccessLevel::WEBMASTER)?"selected":"" }} disabled>Webmaster</option>
                     </select>
                 </div>
                 @if ($errors->has('access_level'))
