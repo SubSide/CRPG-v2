@@ -36,14 +36,13 @@ class UserController extends Controller
         if($request->isMethod('get') || Auth::user()->cant('update', $user)) {
             return view('management.user.edituser', compact('user'));
         }
-
         $this->validate($request, [
             'username' => 'required|max:255|',
             'email' => 'required|email|max:255',
             'fullname' => 'required|max:255',
-            'accesslevel' => 'required|integer',
+            'access_level' => 'required|integer',
         ]);
-
+        
         $testUser = User::where('username', $request->input('username'))
             ->orWhere('email', $request->input('email'))->get();
 

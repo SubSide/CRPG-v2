@@ -9,7 +9,7 @@
             {{ session('msg') }}
         </div>
     @endif
-    <form method="POST" action="">
+    <form method="POST" action="{{ route('admin.users.edit', ['username' => $user->username]) }}">
         {{ csrf_field() }}
         @if($user->access_level >= Auth::user()->access_level)
             <div class="row">
