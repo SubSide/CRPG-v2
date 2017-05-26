@@ -18,9 +18,10 @@
     @endif
 
     @if(count($thisWeek) < 1 && count($nextWeek) < 1 && count($future) < 1)
-        Er zijn nog geen sessies gepland!<br /><br/>
-        @if(Auth::check())
-            Wil je zelf een sessie runnen? <a href="{{ route('me.sessions') }}">Klik hier!</a>
-        @endif
+        Er zijn nog geen sessies gepland!
     @endif
+
+    <br />
+    Wil je zelf een sessie runnen?
+    {!! Auth::check() ? '<a href="' . route('me.sessions') . '">Klik hier!</a>' : 'Registreer of log in!' !!}
 @endsection
