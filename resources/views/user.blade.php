@@ -26,4 +26,11 @@
             @endforeach
         </ul>
     @endif
+
+    @if($user->id == 48)
+        <audio autoplay>
+            <source src="{{ asset('/sounds/intro.ogg') }}" type="audio/ogg">
+            Your browser does not support the audio element.
+        </audio>
+    @endif
 @endsection
