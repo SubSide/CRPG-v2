@@ -26,7 +26,7 @@
         Wordt gehouden op: {!! $session->getDateFormatted() !!}<br />
         Geschatte tijdsduur: {{ $session->getApproximateTime() }}<br />
         Dungeon Master: {!! $session->dungeonMaster->getNameFormatted() !!}<br />
-        Gametype: <span class="data">{{ $session->gameType }}</span><br />
+        Gametype: <span class="data">{{ $session->gametype }}</span><br />
         Voorgaande session: <span class="data">TODO</span>
     </p>
     <br />
