@@ -43,7 +43,7 @@
         <p>Op dit moment heeft nog niemand zich ingeschreven!</p>
     @endforelse
 
-    @if(Auth::check())
+    @if(Auth::check() && strtotime($session->date) > time())
         <br />
         <p>
             @if($session->players->contains(Auth::user()->id))
