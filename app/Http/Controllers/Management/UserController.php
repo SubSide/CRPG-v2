@@ -41,6 +41,7 @@ class UserController extends Controller
             'email' => 'required|email|max:255',
             'fullname' => 'required|max:255',
             'access_level' => 'required|integer',
+            'addon_xp' => 'required|integer',
         ]);
         
         $testUser = User::where('username', $request->input('username'))
@@ -51,7 +52,8 @@ class UserController extends Controller
                 ->with('msg', 'Deze username of email bestaat al!');
 
         $user->username = strip_tags(trim($request->input('username')));
-        $user->fullName = strip_tags(trim($request->input('fullname')));
+        $user->fullname = strip_tags(trim($request->input('fullname')));
+        $user->addon_xp = $request->input('addon_xp');
         $user->email = trim($request->input('email'));
         $user->verified = !empty($request->input('verified'));
 

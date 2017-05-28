@@ -71,12 +71,25 @@
         <div class="row">
             <div class="col-xs-12 col-md-offset-3 col-md-6">
                 <div class="form-group">
-                    <label for="email">Wachtwoord (Houd leeg om niet aan te passen):</label>
+                    <label for="email">Wachtwoord (Houd leeg om <u>niet</u> aan te passen):</label>
                     <input class="form-control" type="password" id="password" name="password" placeholder="(Houd deze leeg om niet aan te passen)" {{ ($user->access_level >= Auth::user()->access_level)?"disabled":"" }} />
                 </div>
                 @if ($errors->has('password'))
                     <span class="help-block">
                         <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-3 col-md-6">
+                <div class="form-group">
+                    <label for="email">Addon XP:</label>
+                    <input class="form-control" type="number" id="addon_xp" name="addon_xp" placeholder="addon XP" value="{{ old('addon_xp', $user->addon_xp) }}" required {{ ($user->access_level >= Auth::user()->access_level)?"disabled":"" }} />
+                </div>
+                @if ($errors->has('addon_xp'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('addon_xp') }}</strong>
                     </span>
                 @endif
             </div>
