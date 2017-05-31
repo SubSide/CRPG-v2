@@ -53,4 +53,11 @@ Route::get('/announcement/{id}', 'Management\AnnouncementController@show')->name
 Route::match(['get', 'post'], '/announcement/{id}/edit', 'Management\AnnouncementController@edit')->name('announcement.edit');
 Route::match(['get', 'post'], '/announcement/{id}/delete', 'Management\AnnouncementController@delete')->name('announcement.delete');
 
+// Character stuff
+Route::get('me/characters', 'Me\MyCharactersController@viewList')->name('characters');
+Route::match(['get', 'post'], '/character/create', 'Me\MyCharactersController@create')->name('character.create');
+Route::match(['get', 'post'], '/character/{id}/edit', 'Me\MyCharactersController@edit')->name('character.edit');
+Route::match(['get', 'post'], '/character/{id}/delete', 'Me\MyCharactersController@delete')->name('character.delete');
+Route::get('character/{id}', 'Me\MyCharactersController@show')->name('character');
+
 

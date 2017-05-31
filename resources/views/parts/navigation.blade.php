@@ -85,7 +85,7 @@
                     <li class="dropdown hidden-xs">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Mijn characters</a></li>
+                            <li><a href="{{ route('characters') }}">Mijn characters</a></li>
                             <li><a href="{{ route('me.sessions') }}">Mijn sessies</a></li>
                             @if(Auth::user()->hasPermission(App\Models\AccessLevel::ADMIN))
                                 <li><a href="{{ route('admin') }}">Adminpanel</a></li>
@@ -95,7 +95,7 @@
                             <li><a href="{{ route('logout') }}">Log out</a></li>
                         </ul>
                     </li>
-                    <li class="visible-xs"><a href="#">Mijn characters</a></li>
+                    <li class="visible-xs"><a href="{{ route('characters') }}">Mijn characters</a></li>
                     <li class="visible-xs"><a href="{{ route('me.sessions') }}">Mijn sessies</a></li>
                     @if(Auth::user()->hasPermission(App\Models\AccessLevel::ADMIN))
                         <li class="visible-xs"><a href="{{ route('admin') }}">Adminpanel</a></li>

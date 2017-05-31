@@ -65,13 +65,13 @@ class SessionController extends Controller
         ]);
 
 
-        $title = strip_tags($_POST['title']);
-        $date = date("Y-m-d H:i:s", strtotime($_POST['date'].' '.$_POST['time']));
-        $prologue = strip_tags($_POST['prologue']);
-        $gameType = $_POST['gametype'];
-        $maxPlayers = intval($_POST['maxplayers']);
-        $round = $_POST['round'];
-        $approxTime = $_POST['approxtime'];
+        $title = strip_tags($request->input('title'));
+        $date = date("Y-m-d H:i:s", strtotime($request->input('date').' '.$request->input('time')));
+        $prologue = strip_tags($request->input('prologue'));
+        $gameType = $request->input('gametype');
+        $maxPlayers = intval($request->input('maxplayers'));
+        $round = $request->input('round');
+        $approxTime = $request->input('approxtime');
 
         $session = new Session();
         $session->title = $title;
@@ -84,7 +84,7 @@ class SessionController extends Controller
         $session->dungeonMaster()->associate(Auth::user());
         $session->save();
 
-        return redirect(route('session', ['id' => $session->id]));
+        return redirect($session->getTitleUrl());
     }
 
 
@@ -116,13 +116,13 @@ class SessionController extends Controller
         ]);
 
 
-        $title = strip_tags($_POST['title']);
-        $date = date("Y-m-d H:i:s", strtotime($_POST['date'].' '.$_POST['time']));
-        $prologue = strip_tags($_POST['prologue']);
-        $gameType = $_POST['gametype'];
-        $maxPlayers = intval($_POST['maxplayers']);
-        $round = $_POST['round'];
-        $approxTime = $_POST['approxtime'];
+        $title = strip_tags($request->input('title'));
+        $date = date("Y-m-d H:i:s", strtotime($request->input('date').' '.$request->input('time')));
+        $prologue = strip_tags($request->input('prologue'));
+        $gameType = $request->input('gametype');
+        $maxPlayers = intval($request->input('maxplayers'));
+        $round = $request->input('round');
+        $approxTime = $request->input('approxtime');
 
         $session->title = $title;
         $session->date = $date;
@@ -133,7 +133,7 @@ class SessionController extends Controller
         $session->approx_time = $approxTime;
         $session->save();
 
-        return redirect(route('session', ['id' => $session->id]));
+        return redirect(route('session', ['id' => $id]));
     }
 
     public function delete(Request $request, $id){
