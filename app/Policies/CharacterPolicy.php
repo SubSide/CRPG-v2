@@ -20,7 +20,7 @@ class CharacterPolicy
      */
     public function update(User $user, Character $character)
     {
-        return $user->hasPermission(AccessLevel::ADMIN) || $character->user()->id === $user->id;
+        return $user->hasPermission(AccessLevel::ADMIN) || $character->user->id === $user->id;
     }
 
     /**
@@ -32,6 +32,6 @@ class CharacterPolicy
      */
     public function delete(User $user, Character $character)
     {
-        return $user->hasPermission(AccessLevel::ADMIN) || $character->user()->id === $user->id;
+        return $user->hasPermission(AccessLevel::ADMIN) || $character->user->id === $user->id;
     }
 }
