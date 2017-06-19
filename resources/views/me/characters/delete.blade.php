@@ -1,13 +1,13 @@
 @extends('base')
 
 @section('content')
-    <span class="text-danger">Weet je zeker dat je deze announcement wilt verwijderen?</span>
+    <span class="text-danger">Weet je zeker dat je deze character wilt verwijderen?</span>
     <br />
     <br />
-    <form method="POST" action="{{ route('announcement.delete', ['id' => $announcement->id]) }}">
+    <form method="POST" action="{{ route('character.delete', ['id' => $character->id]) }}">
         {{ csrf_field() }}
         <input class="btn btn-danger" type="submit" name="imsure" value="Ja" />
-        <a href="{{ route('admin.announcements') }}" class="btn btn-success">Nee</a>
+        <a href="{{ $character->getTitleUrl() }}" class="btn btn-success">Nee</a>
     </form><br />
     @parent()
 @endsection

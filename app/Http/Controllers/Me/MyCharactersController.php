@@ -44,7 +44,7 @@ class MyCharactersController extends Controller
             'name' => 'required|max:32',
             'class' => 'required|max:32',
             'gametype' => 'required|max:32',
-            'level' => 'required|numeric|max:999',
+            'level' => 'required|numeric|min:1|max:'.(Character::getMaxLevel(Auth::user()->xpLeft())),
         ]);
 
 
@@ -62,76 +62,69 @@ class MyCharactersController extends Controller
         $character->user()->associate(Auth::user());
         $character->save();
 
-        return redirect(route('character', ['id' => $character->id]));
+        return redirect($character->getTitleUrl());
     }
 
 
-/*
     public function edit(Request $request, $id){
-        try {
-            $session = Session::findOrFail($id);
-        } catch(ModelNotFoundException $e){
-            return redirect(route('sessions'));
+        if(!Auth::check()){
+            return redirect(route('home'));
         }
 
-        if(!Auth::check() || Auth::user()->cant('update', $session)){
-            return redirect(route('session', ['id' => $id]))->with('err', 'Je hebt hier geen rechten voor!');
+        try {
+            $character = Character::findOrFail($id);
+        } catch(ModelNotFoundException $e){
+            return redirect(route('characters'));
         }
+
+        if(!Auth::check() || Auth::user()->cant('update', $character)){
+            return redirect($character->getTitleUrl())->with('err', 'Je hebt hier geen rechten voor!');
+        }
+
 
         if($request->isMethod('get')){
-            return view('management.session.edit', compact('session'));
+            return view('me.characters.edit', compact('character'));
         }
 
         $this->validate($request, [
-            'title' => 'required|max:32',
-            'date' => 'required|date',
-            'time' => 'required|regex:/[0-9]{2}\:[0-9]{2}/',
-            'prologue' => 'required',
-            'approxtime' => 'required|regex:/[0-9]{2}\:[0-9]{2}/',
-            'gametype' => 'required|max:16',
-            'maxplayers' => 'required|numeric|max:999',
-            'round' => 'required|max:16',
+            'name' => 'required|max:32',
+            'class' => 'required|max:32',
+            'gametype' => 'required|max:32',
+            'level' => 'required|numeric|min:1|max:'.Character::getMaxLevel(Auth::user()->xpLeft() + Character::getLevelXp($character->level)),
         ]);
 
 
-        $title = strip_tags($request->input('title'));
-        $date = date("Y-m-d H:i:s", strtotime($request->input('date').' '.$request->input('time')));
-        $prologue = strip_tags($request->input('prologue'));
-        $gameType = $request->input('gametype');
-        $maxPlayers = intval($request->input('maxplayers'));
-        $round = $request->input('round');
-        $approxTime = $request->input('approxtime');
+        $name = strip_tags($request->input('name'));
+        $class = strip_tags($request->input('class'));
+        $gametype = strip_tags($request->input('gametype'));
+        $level = intval($request->input('level'));
 
-        $session->title = $title;
-        $session->date = $date;
-        $session->prologue = $prologue;
-        $session->gameType = $gameType;
-        $session->max_players = $maxPlayers;
-        $session->round = $round;
-        $session->approx_time = $approxTime;
-        $session->save();
+        $character->name = $name;
+        $character->class = $class;
+        $character->gametype = $gametype;
+        $character->level = $level;
+        $character->save();
 
-        return redirect(route('session', ['id' => $session->id]));
+        return redirect($character->getTitleUrl());
     }
-*/
-/*
+
     public function delete(Request $request, $id){
         try {
-            $session = Session::findOrFail($id);
+            $character = Character::findOrFail($id);
         } catch(ModelNotFoundException $e){
-            return redirect(route('sessions'));
+            return redirect(route('characters'));
         }
 
-        if(!Auth::check() || Auth::user()->cant('delete', $session)){
-            return redirect(route('session', ['id' => $id]))->with('err', 'Je hebt hier geen rechten voor!');
+        if(!Auth::check() || Auth::user()->cant('delete', $character)){
+            return redirect($character->getTitleUrl())->with('err', 'Je hebt hier geen rechten voor!');
         }
 
         if($request->isMethod('get')){
-            return view('management.session.delete', compact('session'));
+            return view('me.characters.delete', compact('character'));
         }
 
-        $session->delete();
-        return redirect(route('sessions'));
+        $character->delete();
+        return redirect(route('characters'));
     }
-*/
+
 }

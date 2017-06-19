@@ -52,8 +52,8 @@
             <div class="row">
                 <div class="col-xs-12 col-md-offset-3 col-md-6">
                     <div class="form-group">
-                        <label for="level">Level:</label>
-                        <input class="form-control" name="level" type="number" id="level" value="{{ old('level', '1') }}" min="1" step="1" max="{{ \App\Models\Character::getMaxLevel(Auth::user()->maxXp()-Auth::user()->xpUsed()) }}" placeholder="Level" required/>
+                        <label for="level">Level:</label><small> (Level <span id="dyn_level"></span> kost <span id="dyn_cost"></span> xp)</small>
+                        <input class="form-control" name="level" type="number" id="level" value="{{ old('level', '1') }}" min="1" step="1" max="{{ \App\Models\Character::getMaxLevel(Auth::user()->xpLeft()) }}" placeholder="Level" required/>
                     </div>
                     @if ($errors->has('level'))
                         <span class="help-block">
@@ -64,12 +64,13 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-offset-3 col-md-6">
-                    Je hebt nog <span id="xp">{{ Auth::user()->maxXp()-Auth::user()->xpUsed() }}</span>/{{ Auth::user()->maxXp() }} over!
+                    Je hebt nog <span id="dyn_xp">{{ Auth::user()->xpLeft() }}</span>/{{ Auth::user()->maxXp() }} over!
+
                 </div>
             </div>
             <script type="text/javascript">
                 // The amount of XP you can spend
-                var xp_over = {{ Auth::user()->maxXp()-Auth::user()->xpUsed() }};
+                var xpOver = {{ Auth::user()->xpLeft() }};
 
                 function calculateXpLeft(){
                     // prevent rounding and integer errors
@@ -77,11 +78,15 @@
 
                     if(isNaN(lvl)) {
                         // If it is not a number, we want to display the xp left
-                        $("#xp").html(xp_over);
+                        $("#xp").html(xpOver);
                         return;
                     }
+                    var xpNeeded = ((lvl * (lvl + 1)) / 2 - 1);
+                    $("#dyn_level").html(lvl);
+                    $("#dyn_cost").html(xpNeeded);
+
                     // Use the formula (n*(n+1))/2 - 1 to calculate the xp you need per level
-                    $("#xp").html(Math.floor(xp_over-((lvl * (lvl + 1)) / 2 - 1)));
+                    $("#dyn_xp").html(Math.floor(xpOver - xpNeeded));
                 }
 
                 $("#level").on('change keyup', calculateXpLeft);

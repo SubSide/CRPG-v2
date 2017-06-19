@@ -35,6 +35,10 @@ class User extends Authenticatable
         return $_xpUsed;
     }
 
+    public function xpLeft(){
+        return $this->maxXP() - $this->xpUsed();
+    }
+
     public function hasPermission($permissionLevel){
         return $this->access_level >= $permissionLevel;
     }

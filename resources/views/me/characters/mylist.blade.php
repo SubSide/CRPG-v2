@@ -19,7 +19,7 @@
         <tfoot>
         @foreach($characters as $character)
         <tr>
-            <td>{{ $character->name }}</td>
+            <td><a href="{{ $character->getTitleUrl() }}">{{ $character->name }}</a></td>
             <td>{{ $character->class }}</td>
             <td>{{ $character->level }}</td>
             <td><a href="{{ route('character.edit', ['id' => $character->id]) }}">Edit</a></td>

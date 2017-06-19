@@ -1,6 +1,18 @@
 @extends('base')
 
 @section('content')
+    @can('update', $character)
+        <div class="dropdown pull-right">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Actions
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="{{ route('character.edit', ['id' => $character->id]) }}">Aanpassen</a></li>
+                <li><a href="{{ route('character.delete', ['id' => $character->id]) }}">Verwijderen</a></li>
+            </ul>
+        </div>
+    @endcan
     <h2>{{ $character->name }}</h2>
     <p>
         Speler: {!! $character->user()->first()->getNameFormatted() !!}<br />
