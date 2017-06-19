@@ -1,0 +1,7 @@
+small.char-desc {
+    display: inline;
+}
+
+small.char-desc a {
+    color: inherit;
+}

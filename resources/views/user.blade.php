@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}" />
+@endsection
+
 @section('content')
     <h3>{!! $user->getNameFormatted() !!}</h3>
     <br />
@@ -15,7 +20,12 @@
     <h4>Alle gespeelde sessies:</h4>
     <ul>
         @forelse($sessionsPlayed as $session)
-            <li><a href="{{ $session->getTitleUrl() }}">{{ $session->title }}</a></li>
+            <li>
+                <a href="{{ $session->getTitleUrl() }}">{{ $session->title }}</a>
+                @if($character = App\Models\Character::find($session->pivot->character_id))
+                    &nbsp;&nbsp;<small class="char-desc text-muted">(als <a href="{{ $character->getTitleUrl() }}">{{ $character->name }}</a>, de lvl {{ $character->level }} {{ $character->class }})</small>
+                @endif
+            </li>
         @empty
             <li>Deze persoon heeft nog geen sessies gespeeld!</li>
         @endforelse

@@ -44,7 +44,7 @@
         <p>
             {!! $user->getNameFormatted() !!}
             @if($character = App\Models\Character::find($user->pivot->character_id))
-                &nbsp;&nbsp;<small class="char-desc">(als <a href="{{ $character->getTitleUrl() }}">{{ $character->name }}</a>, de lvl {{ $character->level }} {{ $character->class }})</small>
+                &nbsp;&nbsp;<small class="char-desc text-muted">(als <a href="{{ $character->getTitleUrl() }}">{{ $character->name }}</a>, de lvl {{ $character->level }} {{ $character->class }})</small>
             @endif
         </p>
     @empty
