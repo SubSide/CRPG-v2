@@ -5,7 +5,11 @@
     <br />
     <h4>Characters:</h4>
     <ul>
-        <li>TODO</li>
+        @forelse($user->characters()->get() as $character)
+            <li><a href="{{ $character->getTitleUrl() }}">{{ $character->name }}</a></li>
+        @empty
+            <li>Deze persoon heeft nog geen characters aangemaakt!</li>
+        @endforelse
     </ul>
     <br />
     <h4>Alle gespeelde sessies:</h4>
