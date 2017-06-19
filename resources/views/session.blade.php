@@ -71,16 +71,18 @@
                 <br />
                 {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-xs-8 col-sm-5">
-                        <select id="character" class="form-control" name="character">
-                            <option selected>(Kies een character)</option>
-                            @foreach(Auth::user()->characters()->get() as $character)
-                                <option value="{{ $character->id }}">{{ $character->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-xs-4 col-xs-7">
-                        <input class="btn btn-success" type="submit" name="signin" value="Schrijf in" />
+                    <div class="col-xs-8 col-sm-6 col-md-5">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <input class="btn btn-primary" type="submit" name="signin" value="Schrijf in" />
+                            </span>
+                            <select id="character" class="form-control" name="character">
+                                <option selected>(Kies een character)</option>
+                                @foreach(Auth::user()->characters()->get() as $character)
+                                    <option value="{{ $character->id }}">{{ $character->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <br />
