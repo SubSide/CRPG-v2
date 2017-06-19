@@ -100,6 +100,14 @@ class SessionController extends Controller
         $session->approx_time = $approxTime;
         $session->level_from = $levelFrom;
         $session->level_to = $levelTo;
+
+
+        $session->previousSession()->associate(
+            Auth::user()->sessionsDMd()
+                ->where('id', $request->input('previous_session'))
+                ->first()
+        );
+
         $session->dungeonMaster()->associate(Auth::user());
         $session->save();
 
@@ -156,6 +164,14 @@ class SessionController extends Controller
         $session->approx_time = $approxTime;
         $session->level_from = $levelFrom;
         $session->level_to = $levelTo;
+
+        $session->previousSession()->associate(
+            $session->dungeonMaster->sessionsDMd()
+            ->where('id', $request->input('previous_session'))
+            ->where('id', '!=', $session->id)
+            ->first()
+        );
+
         $session->save();
 
         return redirect($session->getTitleUrl());

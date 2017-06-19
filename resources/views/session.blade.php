@@ -31,9 +31,9 @@
         Wordt gehouden op: {!! $session->getDateFormatted() !!}<br />
         Geschatte tijdsduur: <span class="data">{{ $session->getApproximateTime() }}</span><br />
         Dungeon Master: {!! $session->dungeonMaster->getNameFormatted() !!}<br />
-        Gametype: <span class="data">{{ $session->gametype }}</span><br />
+        Gametype: <span class="data">{{ $session->gametype }}</span>
         @if(!is_null($session->level_from) || !is_null($session->level_to))
-            Toegestane levels:
+            <br />Toegestane levels:
             <span class="data">
                 @if(!is_null($session->level_from) && !is_null($session->level_to))
                     level {{ $session->level_from }} t/m {{ $session->level_to }}
@@ -43,9 +43,10 @@
                     level {{ $session->level_to }} en lager
                 @endif
             </span>
-            <br />
         @endif
-        Voorgaande session: <span class="data">TODO</span>
+        @if(!is_null($session->previousSession))
+            <br />Voorafgaande sessie: <span class="data"><a href="{{ $session->previousSession->getTitleUrl() }}">{{ $session->previousSession->title }}</a></span>
+        @endif
     </p>
     <br />
     <h3>Inleiding</h3>

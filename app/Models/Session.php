@@ -16,6 +16,11 @@ class Session extends Model
         return $this->belongsTo('App\Models\User', 'dungeon_master');
     }
 
+    public function previousSession()
+    {
+        return $this->belongsTo('App\Models\Session', 'previous_session');
+    }
+
     public function getDateFormatted(){
         $text = '<span style="color: ';
 

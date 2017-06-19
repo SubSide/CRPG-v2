@@ -18,3 +18,7 @@
 .session small.char-desc a {
     color: inherit;
 }
+
+.session .data a {
+    color: inherit;
+}

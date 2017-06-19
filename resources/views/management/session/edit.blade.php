@@ -34,6 +34,25 @@
             <div class="row">
                 <div class="col-xs-12 col-md-offset-3 col-md-6">
                     <div class="form-group">
+                        <label for="previous_session">Voorafgaande sessie:</label>
+                        <select id="previous_session" class="form-control" name="previous_session">
+                            <option>----------</option>
+                            @foreach($session->dungeonMaster->sessionsDMd()->get() as $sessDmd)
+                                @continue($session->id == $sessDmd->id)
+                                <option value="{{ $sessDmd->id }}" {{ (old('previous_session', $session->previous_session) == $sessDmd->id)?'selected':'' }}>{{ $sessDmd->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @if ($errors->has('title'))
+                        <span class="help-block">
+                        <strong>{{ $errors->first('title') }}</strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-offset-3 col-md-6">
+                    <div class="form-group">
                         <label>Datum (YYYY-MM-DD) en tijd (HH:MM):</label>
                         <div class='input-group'>
                         <span class="input-group-addon">
