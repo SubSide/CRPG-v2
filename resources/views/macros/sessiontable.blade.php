@@ -16,7 +16,7 @@
         </tr>
     </tbody>
     <tfoot>
-    @foreach($sessions as $session)
+    @forelse($sessions as $session)
         <tr>
             <td><a href="{{ $session->getTitleUrl() }}">{{ $session->title }}</a></td>
             <td>{!! $session->getDateFormatted() !!}</td>
@@ -26,6 +26,10 @@
             <td>{{ $session->round }}</td>
             <td>{{ $session->getApproximateTime() }} uur</td>
         </tr>
-    @endforeach
+    @empty
+        <tr>
+            <td colspan="7">Er zijn momenteel hier nog geen sessies!</td>
+        </tr>
+    @endforelse
     </tfoot>
 </table>

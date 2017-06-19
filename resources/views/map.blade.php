@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/map.css') }}" />
+@endsection
+
 @section('content')
     <div class="playfield">
         <table class="map">

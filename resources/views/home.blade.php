@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/announcements.css') }}" />
+@endsection
+
 @section('content')
     @foreach($announcements as $announcement)
         <article class="announcement">

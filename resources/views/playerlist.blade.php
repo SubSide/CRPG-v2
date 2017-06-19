@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/responsive-tables.css') }}" />
+@endsection
+
 @section('content')
     <table class="table table-condensed table-bordered responsive-table players-table">
         <thead>

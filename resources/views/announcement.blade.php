@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/announcements.css') }}" />
+@endsection
+
 @section('content')
     <a class="go-back" href="{{ route('home') }}">Ga terug</a>
     <article class="announcement">

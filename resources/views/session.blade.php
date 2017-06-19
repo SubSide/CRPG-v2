@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/session.css') }}" />
+@endsection
+
 @section('content')
 <div class="session">
     @can('update', $session)

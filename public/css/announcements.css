@@ -1,0 +1,37 @@
+article.announcement {
+    padding: 20px;
+    border: 1px solid #4A4A4A;
+    margin-bottom: 40px;
+    position: relative;
+}
+article.announcement:last-child {
+    margin-bottom: 5px;
+}
+
+.announcement h3 {
+    margin-top: 0px;
+    padding-bottom: 5px;
+}
+
+.announcement hr {
+    margin-bottom: 10px;
+    background-color: #3A3A3A;
+}
+
+.announcement p {
+    color: #AAA;
+    padding: 5px 15px;
+}
+
+.announcement .announcement-title {
+    color: #CCC;
+}
+
+.announcement .announcement-link-text {
+    font-size: 12px;
+    color: #CCC;
+}
+
+.announcement .announcement-content {
+    white-space: pre-wrap;
+}

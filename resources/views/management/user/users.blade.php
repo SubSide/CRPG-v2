@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/responsive-tables.css') }}" />
+@endsection
+
 @section('content')
 <p><a href="{{ route('admin') }}">Terug naar het admin menu</a></p>
 <table class="table table-condensed table-bordered responsive-table admin-user-table">

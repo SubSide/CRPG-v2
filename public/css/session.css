@@ -1,0 +1,20 @@
+/* Session page */
+.session p {
+    color: #888;
+}
+
+.session p .data {
+    color: #AAA;
+}
+
+.session p small {
+    display: block;
+}
+
+.session small.char-desc {
+    display: inline;
+}
+
+.session small.char-desc a {
+    color: inherit;
+}

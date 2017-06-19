@@ -1,7 +1,12 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/responsive-tables.css') }}" />
+@endsection
+
 @section('content')
-    <table class="table table-condensed table-bordered responsive-table admin-announcements-table">
+    <table class="table table-condensed table-bordered responsive-table characters-table">
         <thead>
         <tr>
             <th colspan="5"><h4 class="text-center">Mijn characters</h4></th>

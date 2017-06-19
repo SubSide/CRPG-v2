@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/responsive-tables.css') }}" />
+@endsection
+
 @section('content')
     @if(count($thisWeek) > 0)
         @include('macros.sessiontable', ['title' => 'Sessies deze week', 'sessions' => $thisWeek])
