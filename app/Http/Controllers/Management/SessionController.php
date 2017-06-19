@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Auth;
 class SessionController extends Controller
 {
     public function viewList(){
-        $zoekt = Session::where('dungeon_master', 1)->where('date', '<', 'CURRENT_DATE()')->first();
+        $zoekt = Session::where('dungeon_master', 1)->where('date', '<', date("Y-m-d"))->first();
         if($zoekt != null){
             $zoekt->date = date("Y-m-d H:i:s", strtotime('next tuesday 19:30'));
+            $zoekt->players()->detach();
             $zoekt->save();
         }
 
