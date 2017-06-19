@@ -45,7 +45,7 @@ class User extends Authenticatable
 
 
     public function sessionsPlayed(){
-        return $this->belongsToMany('App\Models\Session', 'session_participants', 'user_id', 'session_id');
+        return $this->belongsToMany('App\Models\Session', 'session_participants', 'user_id', 'session_id')->withPivot('character_id');
     }
 
     public function sessionsDMd(){

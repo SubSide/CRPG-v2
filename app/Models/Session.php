@@ -8,7 +8,7 @@ class Session extends Model
 {
 
     public function players(){
-        return $this->belongsToMany('App\Models\User', 'session_participants');
+        return $this->belongsToMany('App\Models\User', 'session_participants')->withPivot('character_id');
     }
 
     public function dungeonMaster()

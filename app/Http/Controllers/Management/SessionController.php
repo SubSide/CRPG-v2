@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
+use App\Models\Character;
 use App\Models\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -98,7 +99,7 @@ class SessionController extends Controller
         }
 
         if(!Auth::check() || Auth::user()->cant('update', $session)){
-            return redirect(route('session', ['id' => $id]))->with('err', 'Je hebt hier geen rechten voor!');
+            return redirect($session->getTitleUrl())->with('err', 'Je hebt hier geen rechten voor!');
         }
 
         if($request->isMethod('get')){
@@ -134,7 +135,7 @@ class SessionController extends Controller
         $session->approx_time = $approxTime;
         $session->save();
 
-        return redirect(route('session', ['id' => $id]));
+        return redirect($session->getTitleUrl());
     }
 
     public function delete(Request $request, $id){
@@ -145,7 +146,7 @@ class SessionController extends Controller
         }
 
         if(!Auth::check() || Auth::user()->cant('delete', $session)){
-            return redirect(route('session', ['id' => $id]))->with('err', 'Je hebt hier geen rechten voor!');
+            return redirect($session->getTitleUrl())->with('err', 'Je hebt hier geen rechten voor!');
         }
 
         if($request->isMethod('get')){
@@ -156,41 +157,46 @@ class SessionController extends Controller
         return redirect(route('sessions'));
     }
 
-    public function signin($id){
-        if(!Auth::check()){
-            return redirect(route('session', ['id' => $id]))->with('err', 'Je moet wel ingelogd zijn!');
-        }
-
+    public function signin(Request $request, $id){
         try {
             $session = Session::findOrFail($id);
-
-
-            if ($session->players->contains(Auth::user()->id)){
-                return redirect(route('session', ['id' => $id]))->with('err', 'Je doet al mee!');
-            } elseif($session->dungeonMaster == Auth::user()){
-                return redirect(route('session', ['id' => $id]))->with('err', 'Je bent de dungeon master!');
-            } elseif($session->max_players <= $session->players->count()){
-                return redirect(route('session', ['id' => $id]))->with('err', 'Deze sessie zit al vol!');
-            }
-
-            $session->players()->attach(Auth::user());
-            return redirect(route('session', ['id' => $id]));
         } catch(ModelNotFoundException $e){
-            return redirect(route('session', ['id' => $id]));
+            return redirect(route('sessions'));
         }
+
+        if(!Auth::check()){
+            return redirect($session->getTitleUrl())->with('err', 'Je moet wel ingelogd zijn!');
+        }
+
+        if ($session->players->contains(Auth::user()->id)){
+            return redirect($session->getTitleUrl())->with('err', 'Je doet al mee!');
+        } elseif($session->dungeonMaster == Auth::user()){
+            return redirect($session->getTitleUrl())->with('err', 'Je bent de dungeon master!');
+        } elseif($session->max_players <= $session->players->count()){
+            return redirect($session->getTitleUrl())->with('err', 'Deze sessie zit al vol!');
+        }
+
+        $character = Character::where('id', $request->input('character'))->where('user_id', Auth::user()->id)->first();
+        $character = ($character != null) ? $character->id : null;
+
+        $session->players()->attach(Auth::user(), ['character_id' => $character]);
+
+        return redirect($session->getTitleUrl());
+
     }
 
     public function signout($id){
-        if(!Auth::check()){
-            return redirect(route('session', ['id' => $id]))->with('err', 'Je moet wel ingelogd zijn!');
-        }
-
         try {
             $session = Session::findOrFail($id);
-            $session->players()->detach(Auth::user());
-            return redirect(route('session', ['id' => $id]));
         } catch(ModelNotFoundException $e){
-            return redirect(route('session', ['id' => $id]));
+            return redirect(route('sessions'));
         }
+
+        if(!Auth::check()){
+            return redirect($session->getTitleUrl())->with('err', 'Je moet wel ingelogd zijn!');
+        }
+
+        $session->players()->detach(Auth::user());
+        return redirect($session->getTitleUrl());
     }
 }

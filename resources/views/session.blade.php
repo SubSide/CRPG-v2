@@ -38,6 +38,9 @@
     @forelse($session->players()->get() as $user)
         <p>
             {!! $user->getNameFormatted() !!}
+            @if($character = App\Models\Character::find($user->pivot->character_id))
+                &nbsp;&nbsp;<small class="char-desc">(als <a href="{{ $character->getTitleUrl() }}">{{ $character->name }}</a>, de lvl {{ $character->level }} {{ $character->class }})</small>
+            @endif
         </p>
     @empty
         <p>Op dit moment heeft nog niemand zich ingeschreven!</p>
@@ -57,10 +60,25 @@
         @elseif($session->max_players <= $session->players->count())
             Deze sessie zit vol!
         @else
-            Wil je mee doen?
-            <form method="POST" action="{{ route('session.signin', ['id' => $session->id]) }}">
+            Wil je mee doen?<br />
+            <a role="button" data-toggle="collapse" href="#signin-form" aria-expanded="false" aria-controls="collapseExample">Klik hier om je in te schrijven</a>
+            <form method="POST" class="collapse" id="signin-form" action="{{ route('session.signin', ['id' => $session->id]) }}">
+                <br />
                 {{ csrf_field() }}
-                <input class="submit-link" type="submit" name="signin" value="Klik hier om in te schrijven." />
+                <div class="row">
+                    <div class="col-xs-8 col-sm-5">
+                        <select id="character" class="form-control" name="character">
+                            <option selected>(Kies een character)</option>
+                            @foreach(Auth::user()->characters()->get() as $character)
+                                <option value="{{ $character->id }}">{{ $character->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-xs-4 col-xs-7">
+                        <input class="btn btn-success" type="submit" name="signin" value="Schrijf in" />
+                    </div>
+                </div>
+                <br />
             </form>
         @endif
         </p>
