@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Character;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -54,10 +55,32 @@ class PlayerController extends Controller
         }
         /* Upcoming sessions */
 
+        /* Most played character */
+        $allMostPlayedCharacter = DB::select(
+            "SELECT sp1.user_id, sp1.character_id FROM session_participants sp1
+            WHERE character_id=(
+                SELECT sp2.character_id
+                FROM session_participants sp2
+                WHERE sp2.character_id IS NOT NULL
+                AND sp1.user_id=sp2.user_id
+                GROUP BY sp2.user_id, sp2.character_id
+                ORDER BY COUNT(*) DESC
+                LIMIT 1
+            )
+            GROUP BY user_id, character_id"
+        );
+        $mostPlayedCharacter = array();
+        foreach($allMostPlayedCharacter as $singleMostPlayedCharacter){
+            $mostPlayedCharacter[$singleMostPlayedCharacter->user_id] = Character::find($singleMostPlayedCharacter->character_id);
+        }
+        /* Most played character */
+
+
         return view('playerlist', array(
             'users' => User::orderBy('fullname', 'ASC')->get(),
             'lastPlayed'=>$lastPlayed,
-            'nextPlaying'=>$nextPlaying
+            'nextPlaying'=>$nextPlaying,
+            'mostPlayedCharacter' => $mostPlayedCharacter,
         ));
     }
 
