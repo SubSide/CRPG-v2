@@ -106,6 +106,29 @@
         <div class="row">
             <div class="col-xs-12 col-md-offset-3 col-md-6">
                 <div class="form-group">
+                    <label for="maxplayers">Levels toegestaan:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">van level</span>
+                        <input type="number" value="{{ old('level_from') }}" class="form-control" name="level_from" />
+                        <span class="input-group-addon">tot en met level</span>
+                        <input type="number" value="{{ old('level_to') }}" class="form-control" name="level_to" />
+                    </div>
+                </div>
+                @if ($errors->has('level_from'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('level_from') }}</strong>
+                    </span>
+                @endif
+                @if ($errors->has('level_to'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('level_to') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-3 col-md-6">
+                <div class="form-group">
                     <label for="round">Ronde (bijvoorbeeld 1/4, of bijvoorbeeld oneshot):</label>
                     <input class="form-control" value="{{ old('round') }}" type="text" id="round" name="round" placeholder="Ronde" min="1" required />
                 </div>

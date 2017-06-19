@@ -40,7 +40,18 @@ class SessionController extends Controller
     public function view($id){
         try {
             $session = Session::findOrFail($id);
-            return view('session', compact('session'));
+            $availableCharacters = array();
+            if(Auth::check()){
+                $availableCharacters = Auth::user()->characters();
+                if($session->level_from != null)
+                    $availableCharacters->where('level', '>=', $session->level_from);
+                if($session->level_to != null)
+                    $availableCharacters->where('level', '<=', $session->level_to);
+
+                $availableCharacters = $availableCharacters->get();
+            }
+
+            return view('session', compact('session', 'availableCharacters'));
         } catch(ModelNotFoundException $e){
             return redirect(route('sessions'));
         }
@@ -63,6 +74,8 @@ class SessionController extends Controller
             'approxtime' => 'required|regex:/[0-9]{2}\:[0-9]{2}/',
             'gametype' => 'required|max:16',
             'maxplayers' => 'required|numeric|max:999',
+            'level_from' => 'nullable|numeric',
+            'level_to' => 'nullable|numeric',
             'round' => 'required|max:16',
         ]);
 
@@ -74,6 +87,8 @@ class SessionController extends Controller
         $maxPlayers = intval($request->input('maxplayers'));
         $round = $request->input('round');
         $approxTime = $request->input('approxtime');
+        $levelFrom = $request->input('level_from');
+        $levelTo = $request->input('level_to');
 
         $session = new Session();
         $session->title = $title;
@@ -83,6 +98,8 @@ class SessionController extends Controller
         $session->max_players = $maxPlayers;
         $session->round = $round;
         $session->approx_time = $approxTime;
+        $session->level_from = $levelFrom;
+        $session->level_to = $levelTo;
         $session->dungeonMaster()->associate(Auth::user());
         $session->save();
 
@@ -114,6 +131,8 @@ class SessionController extends Controller
             'approxtime' => 'required|regex:/[0-9]{2}\:[0-9]{2}/',
             'gametype' => 'required|max:16',
             'maxplayers' => 'required|numeric|max:999',
+            'level_from' => 'nullable|numeric',
+            'level_to' => 'nullable|numeric',
             'round' => 'required|max:16',
         ]);
 
@@ -125,6 +144,8 @@ class SessionController extends Controller
         $maxPlayers = intval($request->input('maxplayers'));
         $round = $request->input('round');
         $approxTime = $request->input('approxtime');
+        $levelFrom = $request->input('level_from');
+        $levelTo = $request->input('level_to');
 
         $session->title = $title;
         $session->date = $date;
@@ -133,6 +154,8 @@ class SessionController extends Controller
         $session->max_players = $maxPlayers;
         $session->round = $round;
         $session->approx_time = $approxTime;
+        $session->level_from = $levelFrom;
+        $session->level_to = $levelTo;
         $session->save();
 
         return redirect($session->getTitleUrl());
@@ -176,7 +199,11 @@ class SessionController extends Controller
             return redirect($session->getTitleUrl())->with('err', 'Deze sessie zit al vol!');
         }
 
-        $character = Character::where('id', $request->input('character'))->where('user_id', Auth::user()->id)->first();
+        $character = Character::where('id', $request->input('character'))
+            ->where('user_id', Auth::user()->id)
+            ->whereBetween('level', [$session->level_from, $session->level_to])
+            ->first();
+
         $character = ($character != null) ? $character->id : null;
 
         $session->players()->attach(Auth::user(), ['character_id' => $character]);

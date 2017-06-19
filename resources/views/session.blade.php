@@ -29,9 +29,22 @@
     <h2>{{ $session->title }}</h2>
     <p>
         Wordt gehouden op: {!! $session->getDateFormatted() !!}<br />
-        Geschatte tijdsduur: {{ $session->getApproximateTime() }}<br />
+        Geschatte tijdsduur: <span class="data">{{ $session->getApproximateTime() }}</span><br />
         Dungeon Master: {!! $session->dungeonMaster->getNameFormatted() !!}<br />
         Gametype: <span class="data">{{ $session->gametype }}</span><br />
+        @if(!is_null($session->level_from) || !is_null($session->level_to))
+            Toegestane levels:
+            <span class="data">
+                @if(!is_null($session->level_from) && !is_null($session->level_to))
+                    level {{ $session->level_from }} t/m {{ $session->level_to }}
+                @elseif(!is_null($session->level_from))
+                    level {{ $session->level_from }} en hoger
+                @else
+                    level {{ $session->level_to }} en lager
+                @endif
+            </span>
+            <br />
+        @endif
         Voorgaande session: <span class="data">TODO</span>
     </p>
     <br />
@@ -78,7 +91,7 @@
                             </span>
                             <select id="character" class="form-control" name="character">
                                 <option selected>(Kies een character)</option>
-                                @foreach(Auth::user()->characters()->get() as $character)
+                                @foreach($availableCharacters as $character)
                                     <option value="{{ $character->id }}">{{ $character->name }}</option>
                                 @endforeach
                             </select>
