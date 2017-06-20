@@ -25,7 +25,7 @@ class User extends Authenticatable
     }
 
     public function maxXp(){
-        return $this->sessionsPlayed->count() + $this->addon_xp;
+        return $this->sessionsPlayed->count() + $this->sessionsDMd->count() + $this->addon_xp;
     }
 
     public function xpUsed(){
@@ -36,7 +36,7 @@ class User extends Authenticatable
     }
 
     public function xpLeft(){
-        return $this->maxXP() - $this->xpUsed();
+        return $this->maxXp() - $this->xpUsed();
     }
 
     public function hasPermission($permissionLevel){
