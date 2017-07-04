@@ -13,6 +13,9 @@
             </ul>
         </div>
     @endcan
+    @if(Auth::check())
+        <a class="go-back" href="{{ route('characters') }}">Jouw characters</a>
+    @endif
     <h2>{{ $character->name }}</h2>
     <p>
         Speler: {!! $character->user()->first()->getNameFormatted() !!}<br />
