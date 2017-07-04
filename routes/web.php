@@ -41,12 +41,6 @@ Route::post('session/{id}/signin', 'Management\SessionController@signin')->name(
 Route::post('session/{id}/signout', 'Management\SessionController@signout')->name('session.signout');
 Route::match(['get', 'post'], 'session/{id}/delete', 'Management\SessionController@delete')->name('session.delete');
 
-// Admin stuff
-Route::get('admin', 'Management\AdminController@show')->name('admin');
-Route::get('admin/users', 'Management\UserController@users')->name('admin.users');
-Route::match(['get', 'post'], 'admin/user/{user}', 'Management\UserController@editUser')->name('admin.users.edit');
-Route::get('admin/announcements', 'Management\AnnouncementController@showAdminList')->name('admin.announcements');
-
 // Announcement stuff
 Route::match(['get', 'post'], '/announcement/create', 'Management\AnnouncementController@create')->name('announcement.create');
 Route::get('/announcement/{id}', 'Management\AnnouncementController@show')->name('announcement.show');
@@ -60,4 +54,15 @@ Route::match(['get', 'post'], '/character/{id}/edit', 'Me\MyCharactersController
 Route::match(['get', 'post'], '/character/{id}/delete', 'Me\MyCharactersController@delete')->name('character.delete');
 Route::get('character/{id}', 'Me\MyCharactersController@show')->name('character');
 
+
+// Admin stuff
+Route::get('admin', 'Management\AdminController@show')->name('admin');
+Route::get('admin/users', 'Management\UserController@users')->name('admin.users');
+Route::match(['get', 'post'], 'admin/user/{user}', 'Management\UserController@editUser')->name('admin.users.edit');
+Route::get('admin/announcements', 'Management\AnnouncementController@showAdminList')->name('admin.announcements');
+Route::get('admin/pages', 'Management\PageController@pages')->name('admin.pages');
+Route::match(['get', 'post'], 'admin/page/edit/{page?}', 'Management\PageController@editPage')->name('admin.pages.edit');
+Route::match(['get', 'post'], 'admin/page/delete/{page?}', 'Management\PageController@editPage')->name('admin.pages.delete');
+
+Route::get('{page}', 'PageController@page')->name('page');
 
