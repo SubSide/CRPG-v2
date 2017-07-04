@@ -77,6 +77,20 @@
                 <li><a href="{{ route('map') }}">Map</a></li>
                 <li><a href="{{ route('sessions') }}">Sessies</a></li>
                 <li><a href="{{ route('users') }}">Spelers</a></li>
+                @foreach($menuPages as $page)
+                    <li><a href="{{ $page->getTitleUrl() }}">{{ $page->title }}</a></li>
+                @endforeach
+
+                @if(count($resourcePages) > 0)
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @foreach($resourcePages as $page)
+                                <li><a href="{{ $page->getTitleUrl() }}">{{ $page->title }}</a></li>
+                            @endforeach
+                        </ul>
+                    </li>
+                @endif
             </ul>
             <hr class="visible-xs" />
             <ul class="nav navbar-nav navbar-right">

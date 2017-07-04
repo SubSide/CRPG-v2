@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class PageType extends Model
+class PageType
 {
     const PAGE = 1;
     const RESOURCE = 2;

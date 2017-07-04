@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-offset-3 col-md-6">
                     <div class="form-group">
-                        <input type="checkbox" id="logged_in" name="title" {{ old('logged_in', $page->logged_in)?'checked':'' }} />
+                        <input type="checkbox" id="logged_in" name="logged_in" {{ old('logged_in', $page->logged_in)?'checked':'' }} />
                         <label for="logged_in">Check dit als de gebruiker ingelogd moet zijn</label>
                     </div>
                 </div>
