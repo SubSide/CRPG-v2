@@ -67,7 +67,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">CRPG</a>
+            <a class="navbar-brand" href="{{ $brandUrl or route('home') }}">CRPG</a>
             @if(Auth::check())
                 <p class="navbar-text visible-xs pull-right navbar-username-small">{!! Auth::user()->getNameFormatted() !!}</p>
             @endif
@@ -77,9 +77,6 @@
                 <li><a href="{{ route('map') }}">Map</a></li>
                 <li><a href="{{ route('sessions') }}">Sessies</a></li>
                 <li><a href="{{ route('users') }}">Spelers</a></li>
-                @foreach($menuPages as $page)
-                    <li><a href="{{ $page->getTitleUrl() }}">{{ $page->title }}</a></li>
-                @endforeach
 
                 @if(count($resourcePages) > 0)
                     <li class="dropdown">
@@ -91,6 +88,10 @@
                         </ul>
                     </li>
                 @endif
+
+                @foreach($menuPages as $page)
+                    <li><a href="{{ $page->getTitleUrl() }}">{{ $page->title }}</a></li>
+                @endforeach
             </ul>
             <hr class="visible-xs" />
             <ul class="nav navbar-nav navbar-right">

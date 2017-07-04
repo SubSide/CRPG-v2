@@ -12,7 +12,8 @@
 */
 
 // Static stuff
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'PageController@home')->name('home');
+Route::get('/announcements', 'PageController@announcements')->name('announcements');
 Route::get('users', 'PlayerController@viewList')->name('users');
 Route::get('user/{user}', 'PlayerController@viewProfile')->name('user');
 Route::get('map', 'MapController@show')->name('map');

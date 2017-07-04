@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Models\Page;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -22,5 +23,20 @@ class PageController extends Controller
         }
 
         return view('page', compact('page'));
+    }
+
+    public function home(){
+        try {
+            $page = Page::findOrFail(1);
+        } catch(ModelNotFoundException $e){
+            return redirect(route('announcements'));
+        }
+
+        return view('page', compact('page'))->with('brandUrl', route('announcements'));
+    }
+
+    public function announcements(){
+        $announcements = Announcement::orderBy('date_posted', 'DESC')->get();
+        return view('home', compact('announcements'));
     }
 }
