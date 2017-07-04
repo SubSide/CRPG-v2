@@ -21,6 +21,11 @@ class User extends Authenticatable
                 $color = '#BB8888';
                 break;
         }
+
+        // Easter egg for Laura
+        if($this->id == 41)
+            $color = '#eb7ac9';
+
         return '<a href="/user/'.$this->username.'" style="color: '.$color.'">'.$this->fullname.'</a>';
     }
 
