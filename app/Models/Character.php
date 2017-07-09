@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Extensions\BBCode;
 use Illuminate\Database\Eloquent\Model;
 
 class Character extends Model
@@ -26,6 +27,10 @@ class Character extends Model
 
     public function getTitleUrl(){
         return route('character', ['id' => $this->id.'-'.str_replace('+', '-', urlencode(preg_replace("/[^a-zA-Z0-9\\ ]+/", "", $this->name)))]);
+    }
+
+    public function processedStory(){
+        return (new BBCode())->toHTML(strip_tags($this->story));
     }
 
 

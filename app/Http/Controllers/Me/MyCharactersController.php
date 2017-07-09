@@ -45,6 +45,7 @@ class MyCharactersController extends Controller
             'class' => 'required|max:32',
             'gametype' => 'required|max:32',
             'level' => 'required|numeric|min:1|max:'.(Character::getMaxLevel(Auth::user()->xpLeft())),
+            'story' => 'nullable|max:1024',
         ]);
 
 
@@ -52,12 +53,14 @@ class MyCharactersController extends Controller
         $class = strip_tags($request->input('class'));
         $gametype = strip_tags($request->input('gametype'));
         $level = intval($request->input('level'));
+        $story = $request->input('story');
 
         $character = new Character();
         $character->name = $name;
         $character->class = $class;
         $character->gametype = $gametype;
         $character->level = $level;
+        $character->story = $story;
 
         $character->user()->associate(Auth::user());
         $character->save();
@@ -91,6 +94,7 @@ class MyCharactersController extends Controller
             'class' => 'required|max:32',
             'gametype' => 'required|max:32',
             'level' => 'required|numeric|min:1|max:'.Character::getMaxLevel(Auth::user()->xpLeft() + Character::getLevelXp($character->level)),
+            'story' => 'nullable|max:1024',
         ]);
 
 
@@ -98,11 +102,13 @@ class MyCharactersController extends Controller
         $class = strip_tags($request->input('class'));
         $gametype = strip_tags($request->input('gametype'));
         $level = intval($request->input('level'));
+        $story = $request->input('story');
 
         $character->name = $name;
         $character->class = $class;
         $character->gametype = $gametype;
         $character->level = $level;
+        $character->story = $story;
         $character->save();
 
         return redirect($character->getTitleUrl());
