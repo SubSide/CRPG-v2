@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Character extends Model
 {
+    const LEVEL_RANGES = [
+        [1, 2],
+        [2, 4],
+        [5, 7],
+        [8, 10],
+        [11, 14],
+        [15, 17],
+        [18, 20],
+    ];
+
     public function user(){
         return $this->belongsTo('App\Models\User');
     }

@@ -76,8 +76,7 @@ class SessionController extends Controller
             'approxtime' => 'required|regex:/[0-9]{2}\:[0-9]{2}/',
             'gametype' => 'required|max:16',
             'maxplayers' => 'required|numeric|max:999',
-            'level_from' => 'nullable|numeric',
-            'level_to' => 'nullable|numeric',
+            'level_range' => 'numeric|nullable',
             'round' => 'required|max:16',
         ]);
 
@@ -89,8 +88,11 @@ class SessionController extends Controller
         $maxPlayers = intval($request->input('maxplayers'));
         $round = $request->input('round');
         $approxTime = $request->input('approxtime');
-        $levelFrom = $request->input('level_from');
-        $levelTo = $request->input('level_to');
+        if ($request->input('level_range') != null) {
+            $levelRange = Character::LEVEL_RANGES[$request->input('level_range')];
+        } else {
+            $levelRange = [null, null];
+        }
 
         $session = new Session();
         $session->title = $title;
@@ -100,8 +102,8 @@ class SessionController extends Controller
         $session->max_players = $maxPlayers;
         $session->round = $round;
         $session->approx_time = $approxTime;
-        $session->level_from = $levelFrom;
-        $session->level_to = $levelTo;
+        $session->level_from = $levelRange[0];
+        $session->level_to = $levelRange[1];
 
 
         $session->previousSession()->associate(
@@ -118,18 +120,19 @@ class SessionController extends Controller
 
 
 
-    public function edit(Request $request, $id){
+    public function edit(Request $request, $id)
+    {
         try {
             $session = Session::findOrFail($id);
-        } catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return redirect(route('sessions'));
         }
 
-        if(!Auth::check() || Auth::user()->cant('update', $session)){
+        if (!Auth::check() || Auth::user()->cant('update', $session)) {
             return redirect($session->getTitleUrl())->with('err', 'Je hebt hier geen rechten voor!');
         }
 
-        if($request->isMethod('get')){
+        if ($request->isMethod('get')) {
             return view('management.session.edit', compact('session'));
         }
 
@@ -141,21 +144,23 @@ class SessionController extends Controller
             'approxtime' => 'required|regex:/[0-9]{2}\:[0-9]{2}/',
             'gametype' => 'required|max:16',
             'maxplayers' => 'required|numeric|max:999',
-            'level_from' => 'nullable|numeric',
-            'level_to' => 'nullable|numeric',
+            'level_range' => 'numeric|nullable',
             'round' => 'required|max:16',
         ]);
 
 
         $title = strip_tags($request->input('title'));
-        $date = date("Y-m-d H:i:s", strtotime($request->input('date').' '.$request->input('time')));
+        $date = date("Y-m-d H:i:s", strtotime($request->input('date') . ' ' . $request->input('time')));
         $prologue = strip_tags($request->input('prologue'));
         $gameType = $request->input('gametype');
         $maxPlayers = intval($request->input('maxplayers'));
         $round = $request->input('round');
         $approxTime = $request->input('approxtime');
-        $levelFrom = $request->input('level_from');
-        $levelTo = $request->input('level_to');
+        if ($request->input('level_range') != null) {
+            $levelRange = Character::LEVEL_RANGES[$request->input('level_range')];
+        } else {
+            $levelRange = [null, null];
+        }
 
         $session->title = $title;
         $session->date = $date;
@@ -164,8 +169,8 @@ class SessionController extends Controller
         $session->max_players = $maxPlayers;
         $session->round = $round;
         $session->approx_time = $approxTime;
-        $session->level_from = $levelFrom;
-        $session->level_to = $levelTo;
+        $session->level_from = $levelRange[0];
+        $session->level_to = $levelRange[1];
 
         $session->previousSession()->associate(
             $session->dungeonMaster->sessionsDMd()
