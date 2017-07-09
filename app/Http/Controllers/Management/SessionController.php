@@ -239,10 +239,17 @@ class SessionController extends Controller
             return redirect($session->getTitleUrl())->with('err', 'Deze sessie zit al vol!');
         }
 
-        $character = Character::where('id', $request->input('character'))
-            ->where('user_id', Auth::user()->id)
-            ->whereBetween('level', [$session->level_from, $session->level_to])
-            ->first();
+
+        $character = Character::where('id', $request->input('character'))->where('user_id', Auth::user()->id);
+
+        if($session->level_from != null && $session->level_to != null) {
+            $character = $character->whereBetween('level', [$session->level_from, $session->level_to]);
+        } else if($session->level_from != null){
+            $character = $character->where('level', '>=', $session->level_from);
+        } else if($session->level_to != null){
+            $character = $character->where('level', '<=', $session->level_to);
+        }
+        $character = $character->first();
 
         $character = ($character != null) ? $character->id : null;
 
