@@ -30,7 +30,9 @@ class User extends Authenticatable
     }
 
     public function maxXp(){
-        return $this->sessionsPlayed->count() + $this->sessionsDMd->count() + $this->addon_xp;
+        return $this->sessionsPlayed()->where('date', '<=', date("Y-m-d H:i:s"))->count()
+            + $this->sessionsDMd()->where('date', '<=', date("Y-m-d H:i:s"))->count()
+            + $this->addon_xp;
     }
 
     public function xpUsed(){
