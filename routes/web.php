@@ -41,6 +41,7 @@ Route::match(['get', 'post'], 'session/{id}/edit', 'Management\SessionController
 Route::post('session/{id}/signin', 'Management\SessionController@signin')->name('session.signin');
 Route::post('session/{id}/signout', 'Management\SessionController@signout')->name('session.signout');
 Route::match(['get', 'post'], 'session/{id}/delete', 'Management\SessionController@delete')->name('session.delete');
+Route::post('session/{id}/player/delete', 'Management\SessionController@deletePlayer')->name('session.player.delete');
 
 // Announcement stuff
 Route::match(['get', 'post'], '/announcement/create', 'Management\AnnouncementController@create')->name('announcement.create');

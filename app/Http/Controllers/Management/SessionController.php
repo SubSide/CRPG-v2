@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
+use App\Models\AccessLevel;
 use App\Models\Character;
 use App\Models\Session;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -194,6 +196,23 @@ class SessionController extends Controller
 
         $session->delete();
         return redirect(route('sessions'));
+    }
+
+
+    public function deletePlayer(Request $request, $id){
+        try {
+            $session = Session::findOrFail($id);
+            $user = User::findOrFail($request->input('player_id'));
+        } catch(ModelNotFoundException $e){
+            return redirect(route('sessions'));
+        }
+
+        if(!Auth::check() || !Auth::user()->hasPermission(AccessLevel::ADMIN)){
+            return redirect($session->getTitleUrl())->with('err', 'Je hebt hier geen rechten voor!');
+        }
+
+        $session->players()->detach($user);
+        return redirect(route('session.edit', ['id' => $session->id]));
     }
 
     public function signin(Request $request, $id){

@@ -189,6 +189,24 @@
                 </p>
             </div>
         </form>
+        @if(Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN))
+            <div class="row">
+                <div class="col-xs-12 col-md-offset-3 col-md-6">
+                    <br /><br />Spelers verwijderen:
+                </div>
+                @forelse($session->players as $player)
+                    <form method="POST" class="col-xs-12 col-md-offset-3 col-md-6" action="{{ route('session.player.delete', ['id' => $session->id]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="player_id" value="{{ $player->id }}" />
+                        <input type="submit" class="btn btn-danger btn-xs" value="X" /> {!! $player->getNameFormatted() !!}<br />
+                    </form>
+                @empty
+                    <div class="col-xs-12 col-md-offset-3 col-md-6">
+                        Er zijn nog geen spelers ingeschreven!
+                    </div>
+                @endforelse
+            </div>
+        @endif
     </div>
 @endsection
 
