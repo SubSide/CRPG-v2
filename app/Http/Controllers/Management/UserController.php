@@ -57,8 +57,8 @@ class UserController extends Controller
         $user->email = trim($request->input('email'));
         $user->verified = !empty($request->input('verified'));
 
-        if(intval($request->input('accesslevel')) < Auth::user()->accessLevel){
-            $user->accessLevel = intval($request->input('accesslevel'));
+        if(intval($request->input('access_level')) < Auth::user()->access_level){
+            $user->access_level = intval($request->input('access_level'));
         }
 
         if(!empty($request->input('password'))){
