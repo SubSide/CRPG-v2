@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/character.css') }}" />
+@endsection
+
 @section('content')
     @can('update', $character)
         <div class="dropdown pull-right">
@@ -26,9 +31,7 @@
     @if(!empty($character->story))
         <br />
         <h4>Character story:</h4>
-        <p>
-            {!! $character->processedStory() !!}
-        </p>
+        <p class="character-content">{!! $character->processedStory() !!}</p>
     @endif
     <br />
     <h4>Alle gespeelde sessies:</h4>
