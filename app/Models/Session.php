@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Extensions\BBCode;
 use Illuminate\Database\Eloquent\Model;
 
 class Session extends Model
@@ -19,6 +20,10 @@ class Session extends Model
     public function previousSession()
     {
         return $this->belongsTo('App\Models\Session', 'previous_session');
+    }
+
+    public function processedPrologue(){
+        return (new BBCode())->toHTML(strip_tags($this->prologue));
     }
 
     public function getDateFormatted(){

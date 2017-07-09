@@ -22,3 +22,7 @@
 .session .data a {
     color: inherit;
 }
+
+.session .session-content {
+    white-space: pre-wrap;
+}

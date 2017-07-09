@@ -50,7 +50,7 @@
     </p>
     <br />
     <h3>Inleiding</h3>
-    <p>{{ $session->prologue }}</p>
+    <p class="session-content">{!! $session->processedPrologue() !!}</p>
     <br />
     <h3>Spelers ({{ $session->players->count().'/'.$session->max_players }})</h3>
 
