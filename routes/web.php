@@ -64,7 +64,7 @@ Route::match(['get', 'post'], 'admin/user/{user}', 'Management\UserController@ed
 Route::get('admin/announcements', 'Management\AnnouncementController@showAdminList')->name('admin.announcements');
 Route::get('admin/pages', 'Management\PageController@pages')->name('admin.pages');
 Route::match(['get', 'post'], 'admin/page/edit/{page?}', 'Management\PageController@editPage')->name('admin.pages.edit');
-Route::match(['get', 'post'], 'admin/page/delete/{page?}', 'Management\PageController@editPage')->name('admin.pages.delete');
+Route::match(['get', 'post'], 'admin/page/delete/{page?}', 'Management\PageController@deletePage')->name('admin.pages.delete');
 
 Route::get('{page}', 'PageController@page')->name('page');
 
