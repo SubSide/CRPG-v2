@@ -18,30 +18,32 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-md-offset-3 col-md-6">
-                    <div class="form-group">
-                        <input type="checkbox" id="logged_in" name="logged_in" {{ old('logged_in', $page->logged_in)?'checked':'' }} />
-                        <label for="logged_in">Check dit als de gebruiker ingelogd moet zijn</label>
+            @unless($page->id == 1)
+                <div class="row">
+                    <div class="col-xs-12 col-md-offset-3 col-md-6">
+                        <div class="form-group">
+                            <input type="checkbox" id="logged_in" name="logged_in" {{ old('logged_in', $page->logged_in)?'checked':'' }} />
+                            <label for="logged_in">Check dit als de gebruiker ingelogd moet zijn</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-md-offset-3 col-md-6">
-                    <div class="form-group">
-                        <label for="type">Pagina type:</label>
-                        <select class="form-control" id="type" name="type">
-                            <option value="{{ App\Models\PageType::PAGE }}" {{ (old('type', $page->type)==\App\Models\PageType::PAGE)?"selected":"" }}>Losse pagina</option>
-                            <option value="{{ App\Models\PageType::RESOURCE }}" {{ (old('type', $page->type)==\App\Models\PageType::RESOURCE)?"selected":"" }}>Resource</option>
-                        </select>
+                <div class="row">
+                    <div class="col-xs-12 col-md-offset-3 col-md-6">
+                        <div class="form-group">
+                            <label for="type">Pagina type:</label>
+                            <select class="form-control" id="type" name="type">
+                                <option value="{{ App\Models\PageType::PAGE }}" {{ (old('type', $page->type)==\App\Models\PageType::PAGE)?"selected":"" }}>Losse pagina</option>
+                                <option value="{{ App\Models\PageType::RESOURCE }}" {{ (old('type', $page->type)==\App\Models\PageType::RESOURCE)?"selected":"" }}>Resource</option>
+                            </select>
+                        </div>
+                        @if ($errors->has('type'))
+                            <span class="help-block">
+                            <strong>{{ $errors->first('type') }}</strong>
+                        </span>
+                        @endif
                     </div>
-                    @if ($errors->has('type'))
-                        <span class="help-block">
-                        <strong>{{ $errors->first('type') }}</strong>
-                    </span>
-                    @endif
                 </div>
-            </div>
+            @endunless
             <div class="row">
                 <div class="col-xs-12 col-md-offset-3 col-md-6">
                     <div class="form-group">
