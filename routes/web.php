@@ -12,7 +12,8 @@
 */
 
 // Static stuff
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'PageController@home')->name('home');
+Route::get('/announcements', 'PageController@announcements')->name('announcements');
 Route::get('users', 'PlayerController@viewList')->name('users');
 Route::get('user/{user}', 'PlayerController@viewProfile')->name('user');
 Route::get('map', 'MapController@show')->name('map');
@@ -40,12 +41,7 @@ Route::match(['get', 'post'], 'session/{id}/edit', 'Management\SessionController
 Route::post('session/{id}/signin', 'Management\SessionController@signin')->name('session.signin');
 Route::post('session/{id}/signout', 'Management\SessionController@signout')->name('session.signout');
 Route::match(['get', 'post'], 'session/{id}/delete', 'Management\SessionController@delete')->name('session.delete');
-
-// Admin stuff
-Route::get('admin', 'Management\AdminController@show')->name('admin');
-Route::get('admin/users', 'Management\UserController@users')->name('admin.users');
-Route::match(['get', 'post'], 'admin/user/{user}', 'Management\UserController@editUser')->name('admin.users.edit');
-Route::get('admin/announcements', 'Management\AnnouncementController@showAdminList')->name('admin.announcements');
+Route::post('session/{id}/player/delete', 'Management\SessionController@deletePlayer')->name('session.player.delete');
 
 // Announcement stuff
 Route::match(['get', 'post'], '/announcement/create', 'Management\AnnouncementController@create')->name('announcement.create');
@@ -60,4 +56,15 @@ Route::match(['get', 'post'], '/character/{id}/edit', 'Me\MyCharactersController
 Route::match(['get', 'post'], '/character/{id}/delete', 'Me\MyCharactersController@delete')->name('character.delete');
 Route::get('character/{id}', 'Me\MyCharactersController@show')->name('character');
 
+
+// Admin stuff
+Route::get('admin', 'Management\AdminController@show')->name('admin');
+Route::get('admin/users', 'Management\UserController@users')->name('admin.users');
+Route::match(['get', 'post'], 'admin/user/{user}', 'Management\UserController@editUser')->name('admin.users.edit');
+Route::get('admin/announcements', 'Management\AnnouncementController@showAdminList')->name('admin.announcements');
+Route::get('admin/pages', 'Management\PageController@pages')->name('admin.pages');
+Route::match(['get', 'post'], 'admin/page/edit/{page?}', 'Management\PageController@editPage')->name('admin.pages.edit');
+Route::match(['get', 'post'], 'admin/page/delete/{page?}', 'Management\PageController@editPage')->name('admin.pages.delete');
+
+Route::get('{page}', 'PageController@page')->name('page');
 

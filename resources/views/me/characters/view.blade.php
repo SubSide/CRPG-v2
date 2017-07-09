@@ -13,12 +13,23 @@
             </ul>
         </div>
     @endcan
+    @if(Auth::check())
+        <a class="go-back" href="{{ route('characters') }}">Jouw characters</a>
+    @endif
     <h2>{{ $character->name }}</h2>
     <p>
         Speler: {!! $character->user()->first()->getNameFormatted() !!}<br />
+        Systeem: {{ $character->gametype }}<br />
         Class: {{ $character->class }}<br />
         Level: {{ $character->level }}
     </p>
+    @if(!empty($character->story))
+        <br />
+        <h4>Character story:</h4>
+        <p>
+            {!! $character->processedStory() !!}
+        </p>
+    @endif
     <br />
     <h4>Alle gespeelde sessies:</h4>
     @forelse($character->sessions()->get() as $session)

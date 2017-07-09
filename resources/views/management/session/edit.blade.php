@@ -125,22 +125,19 @@
             <div class="row">
                 <div class="col-xs-12 col-md-offset-3 col-md-6">
                     <div class="form-group">
-                        <label for="maxplayers">Levels toegestaan:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">van level</span>
-                            <input type="number" value="{{ old('level_from', $session->level_from) }}" class="form-control" name="level_from" />
-                            <span class="input-group-addon">tot en met level</span>
-                            <input type="number" value="{{ old('level_to', $session->level_to) }}" class="form-control" name="level_to" />
-                        </div>
+                        <label for="level_range">Level range:</label>
+                        <select class="form-control custom-select" name="level_range">
+                            <option value="">---------</option>
+                            @foreach(\App\Models\Character::LEVEL_RANGES as $key => $range)
+                                <option value="{{ $key }}" {{ old('level_range', null) == $key || (old('level_range', null) != null && $session->level_from == $range[0] && $session->level_to == $range[1])?'selected':'' }}>
+                                    level {{ $range[0] }} t/m {{ $range[1] }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-                    @if ($errors->has('level_from'))
+                    @if ($errors->has('level_range'))
                         <span class="help-block">
-                        <strong>{{ $errors->first('level_from') }}</strong>
-                    </span>
-                    @endif
-                    @if ($errors->has('level_to'))
-                        <span class="help-block">
-                        <strong>{{ $errors->first('level_to') }}</strong>
+                        <strong>{{ $errors->first('level_range') }}</strong>
                     </span>
                     @endif
                 </div>
@@ -189,10 +186,28 @@
                 </p>
             </div>
         </form>
+        @if(Auth::user()->hasPermission(\App\Models\AccessLevel::ADMIN))
+            <div class="row">
+                <div class="col-xs-12 col-md-offset-3 col-md-6">
+                    <br /><br />Spelers verwijderen:
+                </div>
+                @forelse($session->players as $player)
+                    <form method="POST" class="col-xs-12 col-md-offset-3 col-md-6" action="{{ route('session.player.delete', ['id' => $session->id]) }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="player_id" value="{{ $player->id }}" />
+                        <input type="submit" class="btn btn-danger btn-xs" value="X" /> {!! $player->getNameFormatted() !!}<br />
+                    </form>
+                @empty
+                    <div class="col-xs-12 col-md-offset-3 col-md-6">
+                        Er zijn nog geen spelers ingeschreven!
+                    </div>
+                @endforelse
+            </div>
+        @endif
     </div>
 @endsection
 
-@section('styles')
+@section('stylesheets')
     @parent()
     <link rel="stylesheet" href="/scripts/xbbcode/xbbcode.css" />
 @endsection

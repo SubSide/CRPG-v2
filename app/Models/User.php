@@ -21,11 +21,18 @@ class User extends Authenticatable
                 $color = '#BB8888';
                 break;
         }
+
+        // Easter egg for Laura
+        if($this->id == 41)
+            $color = '#eb7ac9';
+
         return '<a href="/user/'.$this->username.'" style="color: '.$color.'">'.$this->fullname.'</a>';
     }
 
     public function maxXp(){
-        return $this->sessionsPlayed->count() + $this->addon_xp;
+        return $this->sessionsPlayed()->where('date', '<=', date("Y-m-d H:i:s"))->count()
+            + $this->sessionsDMd()->where('date', '<=', date("Y-m-d H:i:s"))->count()
+            + $this->addon_xp;
     }
 
     public function xpUsed(){
@@ -36,7 +43,7 @@ class User extends Authenticatable
     }
 
     public function xpLeft(){
-        return $this->maxXP() - $this->xpUsed();
+        return $this->maxXp() - $this->xpUsed();
     }
 
     public function hasPermission($permissionLevel){

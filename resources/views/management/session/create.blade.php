@@ -124,22 +124,19 @@
         <div class="row">
             <div class="col-xs-12 col-md-offset-3 col-md-6">
                 <div class="form-group">
-                    <label for="maxplayers">Levels toegestaan:</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">van level</span>
-                        <input type="number" value="{{ old('level_from') }}" class="form-control" name="level_from" />
-                        <span class="input-group-addon">tot en met level</span>
-                        <input type="number" value="{{ old('level_to') }}" class="form-control" name="level_to" />
-                    </div>
+                    <label for="level_range">Level range:</label>
+                    <select class="form-control custom-select" name="level_range">
+                        <option value="">---------</option>
+                        @foreach(\App\Models\Character::LEVEL_RANGES as $key => $range)
+                            <option value="{{ $key }}">
+                                level {{ $range[0] }} t/m {{ $range[1] }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
-                @if ($errors->has('level_from'))
+                @if ($errors->has('level_range'))
                     <span class="help-block">
-                        <strong>{{ $errors->first('level_from') }}</strong>
-                    </span>
-                @endif
-                @if ($errors->has('level_to'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('level_to') }}</strong>
+                        <strong>{{ $errors->first('level_range') }}</strong>
                     </span>
                 @endif
             </div>
@@ -191,7 +188,7 @@
 </div>
 @endsection
 
-@section('styles')
+@section('stylesheets')
     @parent()
     <link rel="stylesheet" href="/scripts/xbbcode/xbbcode.css" />
 @endsection

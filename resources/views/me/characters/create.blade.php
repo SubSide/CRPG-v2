@@ -94,11 +94,46 @@
                 calculateXpLeft();
             </script>
             <div class="row">
+                <div class="col-xs-12 col-md-offset-3 col-md-6">
+                    <div class="form-group">
+                        <label for="preview-input">Character story:</label>
+                        <textarea class="form-control" id="preview-input" name="story" placeholder="Character story">{{ old('story') }}</textarea>
+                    </div>
+                    @if ($errors->has('story'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('story') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-offset-3 col-md-6" id="preview">
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-offset-3 col-md-4">
                     <br/>
                     <input class="btn btn-success" type="submit" value="Create"/>
                 </div>
             </div>
+            <div class="row">
+                <p class="col-xs-12 col-md-offset-3 col-md-6">
+                    <br /><br />
+                    Het is mogelijk om je prologue op te maken met BB Code!<br />
+                    <a target="_blank" href="http://www.bbcode.org/reference.php">Lijst met BB Tags</a>
+                </p>
+            </div>
         </form>
     </div>
+@endsection
+
+@section('stylesheets')
+    @parent()
+    <link rel="stylesheet" href="/scripts/xbbcode/xbbcode.css" />
+@endsection
+
+@section('scripts')
+    @parent()
+    <script type="text/javascript" src="/scripts/xbbcode/xbbcode.js"></script>
+    <script type="text/javascript" src="/scripts/preview.js"></script>
 @endsection

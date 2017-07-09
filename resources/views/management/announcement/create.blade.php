@@ -47,13 +47,13 @@
     </div>
 @endsection
 
-@section('styles')
-    @parent()
-    <link rel="stylesheet" href="/scripts/xbbcode/xbbcode.css" />
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('scripts/xbbcode/xbbcode.css') }}" />
 @endsection
 
 @section('scripts')
-    @parent()
-    <script type="text/javascript" src="/scripts/xbbcode/xbbcode.js"></script>
-    <script type="text/javascript" src="/scripts/preview.js"></script>
+    @parent
+    <script type="text/javascript" src="{{ asset('scripts/xbbcode/xbbcode.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('scripts/preview.js') }}"></script>
 @endsection

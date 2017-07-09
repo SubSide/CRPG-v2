@@ -1,0 +1,37 @@
+article.page {
+    padding: 20px;
+    border: 1px solid #4A4A4A;
+    margin-bottom: 40px;
+    position: relative;
+}
+article.page:last-child {
+    margin-bottom: 5px;
+}
+
+.page h3 {
+    margin-top: 0px;
+    padding-bottom: 5px;
+}
+
+.page hr {
+    margin-bottom: 10px;
+    background-color: #3A3A3A;
+}
+
+.page p {
+    color: #AAA;
+    padding: 5px 15px;
+}
+
+.page .page-title {
+    color: #CCC;
+}
+
+.page .page-link-text {
+    font-size: 12px;
+    color: #CCC;
+}
+
+.page .page-content {
+    white-space: pre-wrap;
+}

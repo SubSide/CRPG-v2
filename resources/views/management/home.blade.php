@@ -2,5 +2,6 @@
 
 @section('content')
     <a class="btn btn-default" href="{{ route('admin.users') }}">User management</a><br /><br />
-    <a class="btn btn-default" href="{{ route('admin.announcements') }}">Announcement management</a><br />
+    <a class="btn btn-default" href="{{ route('admin.announcements') }}">Announcement management</a><br /><br />
+    <a class="btn btn-default" href="{{ route('admin.pages') }}">Page management</a><br />
 @endsection
