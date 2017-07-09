@@ -31,7 +31,11 @@
                 <td>{{ \App\Models\PageType::getString($page->type) }}</td>
                 <td>{{ $page->logged_in ? 'Ja' : 'Nee' }}</td>
                 <td><a href="{{ route('admin.pages.edit', ['id' => $page->id]) }}">Edit</a></td>
-                <td><a href="{{ route('admin.pages.delete', ['id' => $page->id]) }}">Delete</a></td>
+                @if($page->id != 1)
+                    <td><a href="{{ route('admin.pages.delete', ['id' => $page->id]) }}">Delete</a></td>
+                @else
+                    <td>&nbsp;</td>
+                @endif
             </tr>
         @endforeach
         </tfoot>

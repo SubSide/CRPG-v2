@@ -24,7 +24,7 @@ class PageController extends Controller
         }
 
         if(!Auth::check() || Auth::user()->cant('update', $page)){
-            return redirect('admin.pages')->with('err', 'Je hebt hier geen rechten voor!');
+            return redirect(route('admin.pages'))->with('err', 'Je hebt hier geen rechten voor!');
         }
 
         if($request->isMethod('get')){
@@ -41,6 +41,27 @@ class PageController extends Controller
         $page->lastEditedBy()->associate(Auth::user());
 
         $page->save();
+
+        return redirect(route('admin.pages'));
+    }
+
+    public function deletePage(Request $request, $page){
+        try {
+            $page = Page::findOrFail($page);
+        } catch(ModelNotFoundException $e){
+            return redirect(route('admin.pages'));
+        }
+
+        if(!Auth::check() || Auth::user()->cant('update', $page)){
+            return redirect(route('admin.pages'))->with('err', 'Je hebt hier geen rechten voor!');
+        }
+
+        if($request->isMethod('get')){
+            return view('management.pages.delete', compact('page'));
+        }
+
+        $page->delete();
+
 
         return redirect(route('admin.pages'));
     }
