@@ -76,6 +76,7 @@ class MyCharactersController extends Controller
 
         try {
             $character = Character::findOrFail($id);
+            $user = $character->user;
         } catch(ModelNotFoundException $e){
             return redirect(route('characters'));
         }
@@ -93,7 +94,7 @@ class MyCharactersController extends Controller
             'name' => 'required|max:32',
             'class' => 'required|max:32',
             'gametype' => 'required|max:32',
-            'level' => 'required|numeric|min:1|max:'.Character::getMaxLevel(Auth::user()->xpLeft() + Character::getLevelXp($character->level)),
+            'level' => 'required|numeric|min:1|max:'.Character::getMaxLevel($user->xpLeft() + Character::getLevelXp($character->level)),
             'story' => 'nullable|max:1024',
         ]);
 
