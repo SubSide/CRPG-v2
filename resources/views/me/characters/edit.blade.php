@@ -96,7 +96,7 @@
                 <div class="col-xs-12 col-md-offset-3 col-md-6">
                     <div class="form-group">
                         <label for="preview-input">Character story:</label>
-                        <textarea class="form-control" id="preview-input" name="story" placeholder="Character story">{{ old('story') }}</textarea>
+                        <textarea class="form-control" id="preview-input" name="story" placeholder="Character story">{{ old('story', $character->story) }}</textarea>
                     </div>
                     @if ($errors->has('story'))
                         <span class="help-block">
