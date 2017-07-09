@@ -30,7 +30,9 @@
             </main>
         </div>
     </div>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ asset('scripts/script.js') }}"></script>
+    @section('scripts')
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{{ asset('scripts/script.js') }}"></script>
+    @show
 </body>
 </html>

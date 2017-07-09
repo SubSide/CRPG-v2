@@ -71,7 +71,7 @@
     </div>
 @endsection
 
-@section('styles')
+@section('stylesheets')
     @parent()
     <link rel="stylesheet" href="/scripts/xbbcode/xbbcode.css" />
 @endsection
