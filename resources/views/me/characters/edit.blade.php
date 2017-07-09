@@ -53,7 +53,7 @@
                 <div class="col-xs-12 col-md-offset-3 col-md-6">
                     <div class="form-group">
                         <label for="level">Level:</label><small> (Level <span id="dyn_level"></span> kost <span id="dyn_cost"></span> xp)</small>
-                        <input class="form-control" name="level" type="number" id="level" value="{{ old('level', $character->level) }}" min="1" step="1" max="{{ \App\Models\Character::getMaxLevel(Auth::user()->xpLeft() + \App\Models\Character::getLevelXp($character->level)) }}" placeholder="Level" required/>
+                        <input class="form-control" name="level" type="number" id="level" value="{{ old('level', $character->level) }}" min="1" step="1" max="{{ \App\Models\Character::getMaxLevel($character->user->xpLeft() + \App\Models\Character::getLevelXp($character->level)) }}" placeholder="Level" required/>
                     </div>
                     @if ($errors->has('level'))
                         <span class="help-block">
@@ -64,12 +64,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-offset-3 col-md-6">
-                    Je hebt nog <span id="dyn_xp">{{ Auth::user()->xpLeft() }}</span>/{{ Auth::user()->maxXp() }} over!
+                    Je hebt nog <span id="dyn_xp">{{ $character->user->xpLeft() }}</span>/{{ $character->user->maxXp() }} over!
                 </div>
             </div>
             <script type="text/javascript">
                 // The amount of XP you can spend
-                var xpOver = {{ Auth::user()->xpLeft() + \App\Models\Character::getLevelXp($character->level) }};
+                var xpOver = {{ $character->user->xpLeft() + \App\Models\Character::getLevelXp($character->level) }};
 
                 function calculateXpLeft(){
                     // prevent rounding and integer errors

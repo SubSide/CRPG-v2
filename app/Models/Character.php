@@ -36,7 +36,7 @@ class Character extends Model
 
     // Static functions
     public static function getMaxLevel($xp){
-        return floor(sqrt(2 * $xp + 2.25) - 0.5);
+        return min(floor(sqrt(2 * $xp + 2.25) - 0.5), 20);
     }
 
     public static function getLevelXp($level){
