@@ -129,7 +129,7 @@
                         <select class="form-control custom-select" name="level_range">
                             <option value="">---------</option>
                             @foreach(\App\Models\Character::LEVEL_RANGES as $key => $range)
-                                <option value="{{ $key }}" {{ old('level_range', null) == $key || (old('level_range', null) != null && $session->level_from == $range[0] && $session->level_to == $range[1])?'selected':'' }}>
+                                <option value="{{ $key }}" {{ old('level_range', null) == $key || (old('level_range', null) == null && $session->level_from == $range[0] && $session->level_to == $range[1])?'selected':'' }}>
                                     level {{ $range[0] }} t/m {{ $range[1] }}
                                 </option>
                             @endforeach
