@@ -106,7 +106,28 @@ class BBCode {
         self::$bbcode_table["/\[youtube\](?:http?:\/\/)?(?:www\.)?youtu(?:\.be\/|be\.com\/watch\?v=)([A-Z0-9\-_]+)(?:&(.*?))?\[\/youtube\]/i"] = function ($match) {
             return "<iframe class=\"youtube-player\" type=\"text/html\" width=\"640\" height=\"385\" src=\"http://www.youtube.com/embed/$match[1]\" frameborder=\"0\"></iframe>";
         };
+
+        // Custom bbcode
+        // Replace [table]...[/table] with <table>...</table>
+        self::$bbcode_table["/\[table\](.*?)\[\/table\]/is"] = function ($match) {
+            return "<table>$match[1]<table/>";
+        };
+        // Replace [tr]...[/tr] with <tr>...</tr>
+        self::$bbcode_table["/\[tr\](.*?)\[\/tr\]/is"] = function ($match) {
+            return "<tr>$match[1]<tr/>";
+        };
+        // Replace [td]...[/td] with <td>...</td>
+        self::$bbcode_table["/\[td\](.*?)\[\/td\]/is"] = function ($match) {
+            return "<td>$match[1]<td/>";
+        };
+        // Replace [td colspan=..]...[/td] with <td colspan="..">...</td>
+        self::$bbcode_table["/\[td colspan=([0-9]+)\](.*?)\[\/td\]/is"] = function ($match) {
+            return "<td colspan='$match[1]'>$match[2]<td/>";
+        };
+
     }
+
+
 
     public function toHTML ($str, $escapeHTML=false, $nr2br=false) {
         if (!$str) {

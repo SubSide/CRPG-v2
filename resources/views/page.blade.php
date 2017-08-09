@@ -23,7 +23,7 @@
         @endcan
         <h3>{{ $page->title }}</h3>
         <hr />
-        <p class="page-content">{!! $page->processedContent() !!}</p>
+        <div class="page-content">{!! $page->processedContent() !!}</div>
         <hr />
         @can('update', $page)
             <div class="pull-right visible-xs">
