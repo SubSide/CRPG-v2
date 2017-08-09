@@ -116,6 +116,10 @@ class BBCode {
         self::$bbcode_table["/\[tr\](.*?)\[\/tr\]/is"] = function ($match) {
             return "<tr>$match[1]<tr/>";
         };
+        // Replace [th]...[/th] with <th>...</th>
+        self::$bbcode_table["/\[th\](.*?)\[\/th\]/is"] = function ($match) {
+            return "<th>$match[1]<th/>";
+        };
         // Replace [td]...[/td] with <td>...</td>
         self::$bbcode_table["/\[td\](.*?)\[\/td\]/is"] = function ($match) {
             return "<td>$match[1]<td/>";
