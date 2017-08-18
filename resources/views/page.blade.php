@@ -43,7 +43,9 @@
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/jq-2.2.4/dt-1.10.15/r-2.1.1/datatables.min.js"></script>
     <script type="text/javascript">
-        $("table.dttable").addClass("table").dataTable({
+        $("table").addClass("table");
+
+        $("table.dttable").dataTable({
             responsive: true
         });
     </script>
