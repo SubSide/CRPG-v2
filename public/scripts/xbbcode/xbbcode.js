@@ -401,7 +401,17 @@ var XBBCODE = (function() {
 
         "table": {
             openTag: function(params,content) {
-                return '<table class="xbbcode-table">';
+                return '<table class="xbbcode-table table">';
+            },
+            closeTag: function(params,content) {
+                return '</table>';
+            },
+            restrictChildrenTo: ["tbody","thead", "tfoot", "tr"]
+        },
+
+        "dttable": {
+            openTag: function(params,content) {
+                return '<table class="xbbcode-table table">';
             },
             closeTag: function(params,content) {
                 return '</table>';
