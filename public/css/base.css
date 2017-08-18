@@ -90,3 +90,7 @@ main {
     border-color: #888 !important;
     color: #AAA !important;
 }
+
+#preview {
+    white-space: pre-wrap;
+}

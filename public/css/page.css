@@ -35,3 +35,23 @@ article.page:last-child {
 .page .page-content {
     white-space: pre-wrap;
 }
+
+
+.paginate_button {
+    margin: 0 5px;
+}
+.paginate_button.previous {
+    margin-right: 20px;
+}
+
+.paginate_button.next {
+    margin-left: 20px;
+}
+
+.dataTables_length {
+    float: left;
+}
+
+.dataTables_filter {
+    float: right;
+}

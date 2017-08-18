@@ -106,7 +106,51 @@ class BBCode {
         self::$bbcode_table["/\[youtube\](?:http?:\/\/)?(?:www\.)?youtu(?:\.be\/|be\.com\/watch\?v=)([A-Z0-9\-_]+)(?:&(.*?))?\[\/youtube\]/i"] = function ($match) {
             return "<iframe class=\"youtube-player\" type=\"text/html\" width=\"640\" height=\"385\" src=\"http://www.youtube.com/embed/$match[1]\" frameborder=\"0\"></iframe>";
         };
+
+        // Custom bbcode
+        // Replace [table]...[/table] with <table>...</table>
+        self::$bbcode_table["/\[table\](.*?)\[\/table\]/is"] = function ($match) {
+            return "<table>$match[1]</table>";
+        };
+        // Replace [thead]...[/thead] with <thead>...</thead>
+        self::$bbcode_table["/\[thead\](.*?)\[\/thead\]/is"] = function ($match) {
+            return "<thead>$match[1]</thead>";
+        };
+        // Replace [tbody]...[/tbody] with <tbody>...</tbody>
+        self::$bbcode_table["/\[tbody\](.*?)\[\/tbody\]/is"] = function ($match) {
+            return "<tbody>$match[1]</tbody>";
+        };
+        // Replace [tr]...[/tr] with <tr>...</tr>
+        self::$bbcode_table["/\[tr\](.*?)\[\/tr\]/is"] = function ($match) {
+            return "<tr>$match[1]</tr>";
+        };
+        // Replace [th]...[/th] with <th>...</th>
+        self::$bbcode_table["/\[th\](.*?)\[\/th\]/is"] = function ($match) {
+            return "<th>$match[1]</th>";
+        };
+        // Replace [td]...[/td] with <td>...</td>
+        self::$bbcode_table["/\[td\](.*?)\[\/td\]/is"] = function ($match) {
+            return "<td>$match[1]</td>";
+        };
+        // Replace [td colspan=..]...[/td] with <td colspan="..">...</td>
+        self::$bbcode_table["/\[td colspan=([0-9]+)\](.*?)\[\/td\]/is"] = function ($match) {
+            return "<td colspan='$match[1]'>$match[2]</td>";
+        };
+
+        // Replace Headers
+        self::$bbcode_table["/\[h3](.*?)\[\/h3\]/is"] = function ($match) {
+            return "<h3>$match[1]</h3>";
+        };
+        self::$bbcode_table["/\[h4](.*?)\[\/h4\]/is"] = function ($match) {
+            return "<h4>$match[1]</h4>";
+        };
+        self::$bbcode_table["/\[h5](.*?)\[\/h5\]/is"] = function ($match) {
+            return "<h5>$match[1]</h5>";
+        };
+
     }
+
+
 
     public function toHTML ($str, $escapeHTML=false, $nr2br=false) {
         if (!$str) {
