@@ -112,6 +112,10 @@ class BBCode {
         self::$bbcode_table["/\[table\](.*?)\[\/table\]/is"] = function ($match) {
             return "<table>$match[1]</table>";
         };
+        // Replace [dttable]...[/dttable] with <table class="dttable">...</table>
+        self::$bbcode_table["/\[dttable\](.*?)\[\/dttable\]/is"] = function ($match) {
+            return "<table class='dttable'>$match[1]</table>";
+        };
         // Replace [thead]...[/thead] with <thead>...</thead>
         self::$bbcode_table["/\[thead\](.*?)\[\/thead\]/is"] = function ($match) {
             return "<thead>$match[1]</thead>";
